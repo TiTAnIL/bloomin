@@ -1,6 +1,6 @@
 ### Bloomin App
 
-# pixel-perfect Build from the Ui\UX design. 
+# pixel-perfect Build from Ui\UX design using Adobe XD
 
 ## Used tools:
 
