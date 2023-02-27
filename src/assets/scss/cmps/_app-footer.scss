@@ -1,0 +1,69 @@
+@use '../setup/variables' as v;
+@use '../setup/mixins' as mix;
+
+.app-footer {
+    background-color: v.$clr2;
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr;
+    height: mix.rem(323px);
+
+    address,
+    ul {
+        margin-top: mix.rem(51px);
+    }
+}
+
+.footer-logo {
+    grid-area: 1 / 2 / 2 / 1;
+    margin-left: mix.rem(78px);
+    // margin-right: mix.rem(-410px);
+    margin-top: 66px;
+}
+
+.footer-image {
+    width: mix.rem(164px);
+    height: mix.rem(167px);
+}
+
+.footer-contact {
+    grid-area: 1 / 2 / 2 / 2;
+    margin-left: mix.rem(-66px);
+}
+
+.footer-social {
+    display: flex;
+    // width: mix.rem(144px)
+    img {
+        margin: mix.rem(24px);
+        width: mix.rem(31px);
+    }
+}
+
+.footer-nav-bar {
+    grid-area: 1 / 3 / 2 / 4;
+    list-style-type: none;
+    padding: 0;
+    margin-left: mix.rem(68px);
+    // margin-right: mix.rem(63px);
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+
+}
+
+.footer-shop-nav {
+    list-style-type: none;
+    column-count: 2;
+    column-gap: mix.rem(56px);
+    margin-left: mix.rem(-115px);
+}
+
+.line-spacing-17 {
+    margin-bottom: mix.rem(17px);
+}
+
+.footer-rigths {
+    display: flex;
+    margin-bottom: mix.rem(60px);
+}

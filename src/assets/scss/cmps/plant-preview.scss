@@ -1,0 +1,9 @@
+@use '../setup/variables' as v;
+
+
+.plants-list {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: v.$clr3;
+}

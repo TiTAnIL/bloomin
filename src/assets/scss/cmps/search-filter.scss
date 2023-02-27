@@ -1,0 +1,77 @@
+@use '../setup/variables' as v;
+@use '../setup/mixins' as mix;
+
+
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid v.$clr4;
+    text-align: left;
+
+    * {
+        margin: 0;
+    }
+
+    h2 {
+        margin: mix.rem(10px) 0 mix.rem(10px) 0;
+    }
+
+    h2:not(:first-child) {
+        border-top: 1px solid v.$clr4;
+    }
+}
+
+.price-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.price-input {
+    display: flex;
+
+    input {
+        display: flex;
+        border-radius: 10px 10px 10px 10px;
+        text-align: center;
+        border: 1px solid #999;
+        -moz-appearance: textfield;
+        width: mix.rem(65px);
+    }
+
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+
+    .separator {
+        width: mix.rem(10px);
+        display: flex;
+        justify-content: center;
+    }
+}
+
+
+.slider-container {
+margin: mix.rem(10px) 0px mix.rem(25px) 0px;
+}
+
+.slider-thumb {
+    width: mix.rem(15px);
+    height: mix.rem(15px);
+    border: 1px solid black;
+    border-radius: 50%;
+    cursor: grab;
+    background-color: v.$clr2;
+}
+
+.slider-track {
+    height: mix.rem(15px);
+    background: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.slider-track.track-before {
+        background-color: v.$clr2;
+    }

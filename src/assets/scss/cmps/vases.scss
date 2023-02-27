@@ -1,0 +1,36 @@
+@use '../setup/variables' as v;
+@use '../setup/mixins' as mix;
+
+
+.vases-container {
+    display: flex;
+    flex-wrap: wrap;
+    img {
+        flex: 1 0 21%;
+        margin: 5px;
+        width: 0.5rem
+    }
+}
+
+.quantity-counter {
+    // position: absolute;
+    // margin-top: mix.rem(580px);
+    font-size: mix.rem(40px);
+
+    p,
+    img {
+        margin: mix.rem(10px);
+    }
+
+    img {
+        width: mix.rem(35px);
+    }
+}
+
+.checked {
+    border: 2px solid black;
+}
+
+.unchecked {
+    border: 2px solid transparent;
+}

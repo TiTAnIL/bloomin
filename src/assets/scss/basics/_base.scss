@@ -1,0 +1,20 @@
+@use '../setup/variables' as v;
+@use '../setup/mixins' as mix;
+
+* {
+    font-family: Assistant;
+    margin: auto;
+}
+
+body {
+    width: 1920px;
+}
+
+button {
+    width: mix.rem(122px);
+    height: mix.rem(44px);
+    border-radius: 50px 50px 50px 50px;
+    background-color: v.$clr3;
+    color: v.$clr5;
+    font-size: v.$font-size-20;
+}

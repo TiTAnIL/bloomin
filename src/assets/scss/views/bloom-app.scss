@@ -1,0 +1,125 @@
+@use '../setup/mixins' as mix;
+@use '../setup/variables' as v;
+
+
+.cfa-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    background-image: url("../../imgs/main/Header_BG.png");
+    height: mix.rem(737px);
+    background-position: right;
+}
+
+.cfa {
+    display: flex;
+    flex-direction: column;
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+.cfa-btns {
+    margin-top: mix.rem(12px);
+
+    :first-child {
+        margin-right: mix.rem(15px);
+    }
+}
+
+.main-layout {
+    background-image: url("../../imgs/main/background1120.png");
+    // height: 2754px;
+}
+
+.promo-tags {
+    display: grid;
+    grid-template-columns: repeat(13, 1fr);
+    grid-template-rows: 1fr;
+    // grid-gap: 0px;
+}
+
+.promos {
+    display: flex;
+    flex-direction: column;
+}
+
+.promo-env {
+    grid-area: 1 / 4 / 2 / 5;
+}
+
+.promo-nun {
+    grid-area: 1 / 7 / 2 / 8;
+}
+
+.nunny-p {
+    margin-top: mix.rem(-35px);
+}
+
+.promo-delivery-p {
+    display: flex;
+    flex-direction: column;
+    margin-top: mix.rem(5px);
+    width: 180px;
+}
+
+.promo-del {
+    grid-area: 1 / 10 / 2 / 11;
+    margin-top: mix.rem(25px);
+}
+
+.questionnaire-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.bottom-image {
+    position: absolute;
+
+    object-fit: cover;
+}
+.top-image {
+    object-fit: cover;
+}
+
+.most-popular {
+    display: flex;
+    flex-direction: column;
+}
+
+.most-pop-list {
+    display: flex;
+    list-style-type: none;
+}
+
+.pop-img-container {
+    display: flex;
+    flex-direction: column;
+    li {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.growing-highlights {
+    display: flex;
+    flex-direction: column;
+    margin-top: mix.rem(180px);
+    ul {
+        list-style-type: none;
+        display: flex;
+        gap: mix.rem(170px);
+    }
+}
+
+.showcase {
+    display: flex;
+    flex-direction: column;
+    margin-top: mix.rem(180px);
+}

@@ -1,0 +1,22 @@
+@use '../setup/mixins' as mix;
+@use '../setup/variables' as v;
+
+.qa-container {
+  h2 {
+    margin-left: mix.rem(18px)
+  }
+}
+
+.question {
+  cursor: pointer;
+}
+
+.answer {
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.question-answer.open .answer {
+  max-height: mix.rem(500px);
+  transition: max-height 0.2s ease-in;
+}

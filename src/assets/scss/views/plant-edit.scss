@@ -1,0 +1,102 @@
+@use '../setup/mixins' as mix;
+@use '../setup/variables' as v;
+
+
+.page-container {
+    display: flex;
+}
+
+.form-container {
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-field {
+        label {
+            display: flex;
+            justify-content: center
+        }
+    }
+
+    .input-group {
+        display: flex;
+        align-items: center;
+
+        input[type="text"],
+        textarea {
+            width: 70%;
+            margin-right: 10px;
+        }
+        
+        button {
+            background-color: #ccc;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+    }
+}
+
+.image-preview-container {
+    display: flex;
+    margin: 0;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+    * {
+        margin: 0;
+    }
+    
+    
+    .main-preview-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: mix.rem(525px);
+        height: mix.rem(525px);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        background-color: #adbca8;
+        img {
+            width: mix.rem(525px);
+            height: mix.rem(525px);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+    }
+    .secondary-preview-images {
+        display: flex;
+        margin: 0;
+    }
+    
+    .secondary-preview-image {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        margin: mix.rem(10px) mix.rem(10px);
+        width: mix.rem(125px);
+        height: mix.rem(125px);
+        background-color: #adbca8;
+        img {
+            width: mix.rem(125px);
+            height: mix.rem(125px);
+        }
+
+
+        .secondary-preview-image-item {
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+    }
+}

@@ -1,0 +1,32 @@
+[
+    {
+        "_id": "1",
+        "title": "what is the shipping cost?",
+        "answer": "Shipping costs $10, with purchases over $100 shipping is free."
+    },
+    {
+        "_id": "2",
+        "title": "How soon will I receive the shipment?",
+        "answer": "enean sit amet justo. Morbi ut odio."
+    },
+    {
+        "_id": "3",
+        "title": "And if I choose to return the product?",
+        "answer": "enean sit amet justo. Morbi ut odio."
+    },
+    {
+        "_id": "4",
+        "title": "Does the plant arrive planted in the pot I chose?",
+        "answer": "Yes"
+    },
+    {
+        "_id": "5",
+        "title": "Can I attach a greeting card?",
+        "answer": "enean sit amet justo. Morbi ut odio."
+    },
+    {
+        "_id": "6",
+        "title": "I followed the instructions, but the plant shows signs of distress, what to do?",
+        "answer": "enean sit amet justo. Morbi ut odio."
+    }
+]

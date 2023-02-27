@@ -1,0 +1,80 @@
+@use '../setup/variables' as v;
+@use '../setup/mixins' as mix;
+
+/* Character Styles */
+.assistant-reg-20pt {
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: normal;
+    font-size: mix.rem(20px);
+    line-height: mix.rem(26px);
+    letter-spacing: 0;
+    color: var(v.$clr3);
+}
+
+.assistant-—-72pt-h1,
+h1 {
+    font-family: assistant;
+    font-style: normal;
+    font-weight: bold;
+    font-size: mix.rem(84px);
+    line-height: mix.rem(86px);
+    letter-spacing: 0;
+    color: v.$clr5;
+}
+
+.assistant-—-30pt-h2,
+h2 {
+    font-family: assistant;
+    font-style: normal;
+    font-weight: bold;
+    font-size: mix.rem(30px);
+    line-height: mix.rem(40px);
+    letter-spacing: 0;
+    color: v.$clr3;
+}
+
+.char-style-1 {
+    font-family: assistant;
+    font-style: normal;
+    font-weight: 100;
+    font-size: mix.rem(20px);
+    line-height: mix.rem(26px);
+    letter-spacing: 0;
+    color: v.$clr5;
+}
+
+.char-style-2 {
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: 800;
+    font-size: mix.rem(20px);
+    line-height: mix.rem(26px);
+    letter-spacing: 0;
+    color: v.$clr5;
+}
+
+.spanner {
+    column-span: all;
+}
+
+.transperent {
+    background-color: transparent;
+}
+
+.flex {
+    display: flex;
+}
+
+.deactive-btn {
+   opacity: .5;
+   cursor:not-allowed
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.border {
+    border-bottom: 1px v.$clr4 solid;
+}

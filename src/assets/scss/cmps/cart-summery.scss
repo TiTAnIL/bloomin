@@ -1,0 +1,30 @@
+@use '../setup/mixins' as mix;
+@use '../setup/variables' as v;
+
+.summery-container {
+    width: mix.rem(400px);
+    border: 1px v.$clr4 solid;
+    display: flex;
+    margin: 0;
+    top: 280px;
+    flex-direction: column;
+    align-items: center;
+    div {
+        margin: 0;
+    }
+}
+
+.coupon-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.summery-table {
+    margin: mix.rem(10px);
+}
+
+.summery-total {
+    width: 100%;
+    display: flex;
+
+}

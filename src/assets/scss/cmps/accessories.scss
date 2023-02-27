@@ -1,0 +1,23 @@
+@use '../setup/mixins' as mix;
+@use '../setup/variables' as v;
+
+.accessories-container {
+    margin-top: mix.rem(60px);
+    margin-bottom: mix.rem(60px);
+    display: flex;
+    flex-direction: column;
+
+    div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .accessory {
+        display: flex;
+        flex-direction: row;
+    }
+
+    img:not(last-child) {
+        margin-left: mix.rem(27px);
+    }
+}
