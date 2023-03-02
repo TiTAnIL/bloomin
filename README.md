@@ -10,20 +10,6 @@
 # Video Demo: showing functionality
 ### `https://youtu.be/K5mUE-4myuA`
 
-run by typing:
-### `npm start`
-### `npm i`
-in console or cmd from package.json directory.
-
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-
-
 ## Bloomin is an e-commerce web application for buying plants. The app is built using React and Redux
 
     Browse a variety of plants for sale
@@ -36,7 +22,17 @@ You may also see any lint errors in the console.
 
     Clone the repository to your local machine using git clone https://github.com/YOUR-USERNAME/plantify.git
     Install dependencies using npm install
-    Start the app using npm start
+    Start the app using typing in console or CMD
+### `npm start`
+### `npm i`
+
+
+
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
 ## Contributing
 
