@@ -35,9 +35,7 @@ async function query(filterBy) {
 
     var accessories = await storageService.query(STORAGE_KEY)
     if (!accessories || !accessories.length) {
-        console.log('Accessory data missing')
         insertDemoData()
-        console.log(' Accessory data loaded')
     }
     accessories = accessories.map(accessory => {
         accessory.rate = (utilService.getRandomIntInclusive(11, 39) / 10)

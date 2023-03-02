@@ -1,37 +1,15 @@
 @use '../setup/variables' as v;
 @use '../setup/mixins' as mix;
 
-.shop-headline {
-    margin-top: mix.rem(55px);
-    margin-bottom: mix.rem(23px);
-    grid-area: 1 / 1 / 2 / 4;
+
+.plants-cards {
+    display: flex;
+    flex-direction: column;
 }
+
 .card-layout {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(5, minmax(10px, 50px), 1fr);
-    // grid-column-gap: 0px;
-    // grid-row-gap: 0px;
-}
-
-.preview-card {
-    display: flex;
-    flex-direction: column;
-    img:not(:last-child) {
-        margin-top: mix.rem(63px);
-    }
-    
-}
-
-.cardID1 { grid-area: 2 / 1 / 3 / 2; }
-.cardID2 { grid-area: 2 / 2 / 3 / 3; }
-.cardID3 { grid-area: 2 / 3 / 3 / 4; }
-.cardID4 { grid-area: 3 / 1 / 4 / 2; }
-.cardID5 { grid-area: 3 / 2 / 4 / 3; }
-.cardID6 { grid-area: 3 / 3 / 4 / 4; }
-.cardID7 { grid-area: 4 / 1 / 5 / 2; }
-.cardID8 { grid-area: 4 / 2 / 5 / 3; }
-.cardID9 { grid-area: 4 / 3 / 5 / 4; }
-.cardID10 { grid-area: 5 / 1 / 6 / 2; }
-.cardID11 { grid-area: 5 / 2 / 6 / 3; }
-.cardID12 { grid-area: 5 / 3 / 6 / 4; }
+    grid-gap: mix.rem(23px);
+  }
+  

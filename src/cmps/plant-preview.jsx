@@ -22,12 +22,13 @@ export function PlantPreview({ plant }) {
     >
         {" "}
     </LoadingScreen>
-    return <div>
+    return <>
         <Link to={`/plant/${plant._id}`} className="plants-list" >
             <img src={plant.pic} alt={plant._id}></img>
             <h2>{plant.name}</h2>
             <p>{plant.price}</p>
         </Link>
+      <div className="plant-controls">
         <Link to={`/plant/edit/${plant._id}`}>
             <button>
                 edit
@@ -35,4 +36,5 @@ export function PlantPreview({ plant }) {
         </Link>
         <button onClick={() => onRemovePlant()}>Delete Plant</button>
     </div>
+    </>
 }

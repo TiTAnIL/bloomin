@@ -24,7 +24,6 @@ export function Edit(props) {
             .catch((err) => {
                 console.log('err:', err)
             })
-            console.log(plant, plantId)
     }, [])
 
 
@@ -78,13 +77,10 @@ export function Edit(props) {
         // formData.append("secondary", images.secondary)
         // formData.append("tertiary", images.tertiary)
         if (plant._id) {
-            console.log('updating plant!')
             dispatch(updatePlant(plant)).then(() => {
                 navigate('/shop')
             })
         } else {
-            console.log('new plant!')
-            console.log(plant)
             dispatch(addPlant(plant)).then(() => {
                 navigate('/shop')
             })
@@ -213,7 +209,6 @@ export function Edit(props) {
                     </div>
                 </div>
                 <div className='submit-button'>
-                    <button onClick={() => console.log(plant)}>test</button>
                     <button onClick={() => handleSubmit()}>Submit</button>
                 </div>
             </div>

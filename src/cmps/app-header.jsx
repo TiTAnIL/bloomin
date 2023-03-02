@@ -1,45 +1,42 @@
-// import { connect, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import debounce from 'lodash/debounce'
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { loadPlants, setFilterBy } from "../store/actions/plant.actions";
+import { NavLink, useNavigate } from "react-router-dom"
+// import debounce from 'lodash/debounce'
+import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
+import { loadPlants } from "../store/actions/plant.actions"
+import { eventBusService } from '../services/event-bus.service'
 
-import logo from '../assets/imgs/logo.png';
-import searchIcon from '../assets/imgs/ic-actions-search.png';
+import logo from '../assets/imgs/logo.png'
+import searchIcon from '../assets/imgs/ic-actions-search.png'
 import cart from '../assets/imgs/cart.png'
+
 
 export function AppHeader() {
 
-    const [nameFilter, setNameFilter] = useState(null)
+    const [name, setname] = useState('')
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const filterDelay = 1000
 
     const onChangeFilter = (filterBy) => {
-        console.log('filterby', filterBy)
-        dispatch(setFilterBy(filterBy))
         dispatch(loadPlants())
     }
 
-    const filterData = debounce(() => {
-        onChangeFilter({
-            name: nameFilter
-        })
-    }, filterDelay)
-
     useEffect(() => {
-        filterData()
-    }, [nameFilter])
+        onChangeFilter({
+            name: name
+        })
+    }, [name])
 
-    function handleNameFilterChange(event) {
-        event.preventDefault()
-        event.stopPropagation()
-        setNameFilter(event.target.value)
+    function handleNameChange(event) {
+        setname(event.target.value)
     }
 
-    function onSubmit(event) {
+    function handleSubmit(event) {
         event.preventDefault()
         event.stopPropagation()
+        const filterBy = { name: name }
+        // navigate(`/shop?${'name', encodeURIComponent(JSON.stringify(filterBy))}`)
+        eventBusService.emit("nameChange", filterBy)
     }
 
     return (
@@ -55,7 +52,7 @@ export function AppHeader() {
                     </ul>
                     <ul className="header-opt">
                         <li>
-                            <form onSubmit={onSubmit}
+                            <form onSubmit={handleSubmit}
                                 role="search">
                                 <label
                                     className="search-icon"
@@ -67,7 +64,8 @@ export function AppHeader() {
                                     className="search-input"
                                     type="search"
                                     placeholder="Search"
-                                    onChange={handleNameFilterChange}
+                                    onChange={handleNameChange}
+                                    value={name}
                                     autoFocus
                                 />
                             </form>

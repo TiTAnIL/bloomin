@@ -1,21 +1,7 @@
 
 const INITIAL_STATE = {
     plants: [],
-    filterBy: {
-        // location: {
-        //     Home: false,
-        //     Office: false,
-        //     Balcony: false,
-        //     Yard: false
-        // },
-        // Difficulty: null,
-        // Lightning: null,
-        // Watering: null,
-        // priceRange: {
-        //     min: 0,
-        //     max: 1000
-        // },
-    },
+    filterBy: {},
     isLoading: true
 }
 

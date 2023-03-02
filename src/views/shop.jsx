@@ -1,78 +1,26 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { loadPlants, setFilterBy } from '../store/actions/plant.actions.js'
+
 import queryString from 'query-string'
 
 import { PlantList } from '../cmps/plants-list'
 import { SearchFilter } from '../cmps/search-filter'
 import LoadingScreen from "react-loading-screen"
 
-export function Shop() {
+export function Shop(props) {
 
     const { plants, isLoading } = useSelector(state => state.plantModule)
     const [currentPage, setCurrentPage] = useState(1)
     const [plantsPerPage, setPlantsPerPage] = useState(9)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const location = useLocation()
 
-    const [filter, setFilter] = useState()
-    // const handleFilterChange = (newFilter) => {
-    //     setFilter(newFilter)
-    // }
 
-    useEffect(() => {
-        console.log('use')
-        const query = queryString.parse(window.location.search)
-        const decodedFilterBy = {}
-        if (query) {
-            const filterParams = query
-            if (filterParams.locations) {
-                decodedFilterBy.locations = JSON.parse(decodeURIComponent(filterParams.locations))
-                // console.log(decodedFilterBy.locations)
-            }
-            if (filterParams.difficulty) {
-                // console.log(filterParams.difficulty)
-                decodedFilterBy.difficulty = JSON.parse(decodeURIComponent(filterParams.difficulty))
-                // console.log(decodedFilterBy.difficulty)
-
-            }
-            if (filterParams.lightning) {
-                // console.log(filterParams.lightning)
-                decodedFilterBy.lightning = JSON.parse(decodeURIComponent(filterParams.lightning))
-                // console.log(decodedFilterBy.lightning)
-
-            }
-            if (filterParams.watering) {
-                // console.log(filterParams.watering)
-                decodedFilterBy.watering = JSON.parse(decodeURIComponent(filterParams.watering))
-                // console.log(decodedFilterBy.watering)
-
-            }
-            if (filterParams.priceRange) {
-                // console.log(filterParams.priceRange)
-                decodedFilterBy.priceRange = JSON.parse(decodeURIComponent(filterParams.priceRange))
-                // console.log(decodedFilterBy.priceRange)
-            }
-            console.log(decodedFilterBy);
-        }
-        console.log('dispatchin')
-        dispatch(setFilterBy(decodedFilterBy))
-    }, [dispatch])
-
-    const memoizedLoadPlants = useCallback(() => {
-        console.log('memoized')
-        dispatch(loadPlants())
-    }, [dispatch])
-
-    // useEffect(() => {
-    //     memoizedLoadPlants()
-    // }, [memoizedLoadPlants])
-
-    const onChangeFilter = (filterBy) => {
+    function onChangeFilter (filterBy) {
         const params = new URLSearchParams()
-        console.log(params)
-        console.log(filterBy)
         if (filterBy.locations) {
             params.set('locations', encodeURIComponent(JSON.stringify(filterBy.locations)))
         }
@@ -88,17 +36,18 @@ export function Shop() {
         if (filterBy.priceRange) {
             params.set('priceRange', encodeURIComponent(JSON.stringify(filterBy.priceRange)))
         }
+        if (filterBy.name) {
+            params.set('name', encodeURIComponent(JSON.stringify(filterBy.name)))
+        }
         const queryStringParams = params.toString()
         navigate(`/shop?${queryStringParams}`)
-        console.log('onChangeFilter changing filter', filterBy)
         dispatch(setFilterBy(filterBy))
-        memoizedLoadPlants()
+        dispatch(loadPlants())
     }
 
     const idxLastPlant = currentPage * plantsPerPage
     const idxFirstPlant = idxLastPlant - plantsPerPage
     const currentPlants = plants ? plants.slice(idxFirstPlant, idxLastPlant) : [];
-
 
     const pageNumbers = []
     for (let i = 1; i <= Math.ceil(plants.length / plantsPerPage); i++) {
@@ -141,7 +90,7 @@ export function Shop() {
                 <button>Add Plant</button>
             </Link>
             <div className='shop-container'>
-                <SearchFilter initialFilter={filter} onChangeFilter={onChangeFilter} />
+                <SearchFilter onChangeFilter={onChangeFilter} />
                 <PlantList plants={currentPlants} />
             </div>
             <ul id="page-numbers" className='pagination'>Page: {renderPageNums}

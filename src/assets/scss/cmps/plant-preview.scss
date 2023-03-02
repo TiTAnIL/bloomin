@@ -1,5 +1,9 @@
 @use '../setup/variables' as v;
 
+.plant-controls {
+    display: flex;
+    flex-direction: row;
+}
 
 .plants-list {
     display: flex;

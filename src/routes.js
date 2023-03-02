@@ -19,13 +19,13 @@ const routes = [
         component: <About />,
     },
     {
-        path: '/shop',
+        path: '/shop/',
         component: <Shop />
     },
-    // {
-    //     path: '/shop/:',
-    //     component: <Shop />
-    // },
+    {
+        path: '/shop:',
+        component: <Shop />
+    },
     {
         path: '/contact',
         component: <Contact />

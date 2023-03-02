@@ -36,26 +36,11 @@ async function query(filterBy) {
 
     var vases = await storageService.query(STORAGE_KEY)
     if (!vases || !vases.length) {
-        // console.log('vases data missing')
         insertDemoData()
-        // console.log(' vases data loaded')
     }
-    // vases = vases.map(vase => {
-    //     vase.rate = (utilService.getRandomIntInclusive(11, 39) / 10)
-    //     console.log('vase mapped rate added', vase)
-    //     return vase
-    // })
-    // console.log('accesories', vases)
+ 
     return vases
-    // let newAccessories = []
-    // if (filterBy) {
-    //     console.log('reg')
-    //     console.log(filterBy)
-    // } else {
-    //     console.log('elsed')
-    //     console.log(filterBy)
-    // }
-}
+
 
 function getById(id) {
     return storageService.get(STORAGE_KEY, id)

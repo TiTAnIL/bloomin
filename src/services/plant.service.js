@@ -1,6 +1,5 @@
 import { storageService } from "./async-storage.service.js"
 import { utilService } from './util.service.js'
-// import { userService } from './user.service.js'
 import { store } from '../store/index'
 import { getActionAddPlant, getActionRemovePlant, getActionUpdatePlant } from "../store/actions/plant.actions.js";
 
@@ -35,7 +34,6 @@ async function query(filterBy) {
     insertDemoData()
   }
   if (filterBy) {
-    console.log('plant.service FILTER BY', filterBy)
     const {name,  priceRange, watering, lightning, difficulty, locations } = filterBy
     if (name) {
       const regex = new RegExp(name, 'i')

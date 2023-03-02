@@ -26,10 +26,6 @@ export function BloomApp() {
         dispatch(addItem({ ...plant, quantity: 1 }))
     }
 
-    const onPlantClick = (plant) => {
-        console.log(plant)
-    }
-
     const currPlants = plants.slice(0, 4)
 
     if (!currPlants) return <h2>Loading</h2>
@@ -71,9 +67,9 @@ export function BloomApp() {
                     </div>
                 </div>
                 <div className='questionnaire-container'>
-                    <img class="bottom-image" src={cloud801} alt="Bottom Image" />
-                    <img class="top-image" src={cloud810} alt="Top Image" />
-                    <div class="text">
+                    <img className="bottom-image" src={cloud801} alt="Bottom Image" />
+                    <img className="top-image" src={cloud810} alt="Top Image" />
+                    <div className="text">
                         <h2 className=''>want a new plant and not sure what will fit?</h2>
                         <h2 className=''>every plant you had died?</h2>
                         <h2 className=''>answer the questiones and we`ll match a plant for your needs</h2>
@@ -84,13 +80,13 @@ export function BloomApp() {
                     <h2>Most Popular</h2>
                     <ul className='most-pop-list'>
                         {currPlants.map(plant => {
-                            return (<div className='pop-img-container'>
-                                <li>
-                                    <img className='pop-img' src={plant.pic} alt='name' />
-                                    <p>{plant.name}</p>
-                                    <p>{plant.price}</p>
+                            return (<div key={plant.name + 'container'} className='pop-img-container'>
+                                <li key={plant.neme}>
+                                    <img key={plant.name + 'image'} className='pop-img' src={plant.pic} alt='name' />
+                                    <p key={plant.name + 'para'}>{plant.name}</p>
+                                    <p key={plant.name + plant.price}>{plant.price}</p>
                                 </li>
-                                <button onClick={() => onAddToCart(plant)}>Add To Cart</button>
+                                <button key={plant.name + 'button'} onClick={() => onAddToCart(plant)}>Add To Cart</button>
                             </div>
                             )
                         })}
@@ -100,19 +96,19 @@ export function BloomApp() {
                 <div className='growing-highlights'>
                     <h2>The three emphases for correct cultivation</h2>
                     <ul>
-                        <li>
+                        <li key='lamp'>
                             <img src={lamp} alt='lamp' />
                             <h2>Ligtning</h2>
                             <p>Choose plants that compatible</p>
                             <p>with the ligtning in your home</p>
                         </li>
-                        <li>
+                        <li key='watch'>
                             <img className='times-img' src={sandWatch} alt='sand watch' />
                             <h2>Times</h2>
                             <p>Choose plant that suit</p>
                             <p>with your scheduale</p>
                         </li>
-                        <li>
+                        <li key='wateringCan'>
                             <img src={wateringCan} alt='watering can' />
                             <h2>Watering</h2>
                             <p>Know how much water</p>

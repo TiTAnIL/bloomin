@@ -18,7 +18,6 @@ export function cartReducer(state = INITIAL_STATE, action) {
                 items: [...state.items, action.item],
             }
         case 'REMOVE_FROM_CART':
-            console.log(action.itemId)
             const lastRemovedStay = state.items.find(
                 (item) => item._id === action.itemId
             )

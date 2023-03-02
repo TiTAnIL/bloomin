@@ -29,7 +29,6 @@ export function Cart() {
     }, [dispatch, loadCart])
 
     const onRemoveItem = useCallback( async  (id) => {
-        console.log(id)
         setID(id)
         dispatch(removeItem(id))
     }, [dispatch, id])
