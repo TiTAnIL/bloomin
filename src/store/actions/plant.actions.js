@@ -10,6 +10,7 @@ export function getActionRemovePlant(plantId) {
 }
 
 export function getActionAddPlant(plant) {
+  console.log(plant)
   return {
     type: 'ADD_PLANT',
     plant,
@@ -17,6 +18,7 @@ export function getActionAddPlant(plant) {
 }
 
 export function getActionUpdatePlant(plant) {
+  console.log(plant)
   return {
     type: 'UPDATE_PLANT',
     plant,
@@ -56,6 +58,7 @@ export function addPlant(plant) {
   return async (dispatch) => {
     try {
       const savedPlant = await plantService.save(plant)
+      console.log(savedPlant)
       dispatch(getActionAddPlant(savedPlant))
       showSuccessMsg('plant added')
     } catch (err) {

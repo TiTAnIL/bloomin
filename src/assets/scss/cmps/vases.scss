@@ -5,6 +5,7 @@
 .vases-container {
     display: flex;
     flex-wrap: wrap;
+
     img {
         flex: 1 0 21%;
         margin: 5px;
@@ -13,8 +14,6 @@
 }
 
 .quantity-counter {
-    // position: absolute;
-    // margin-top: mix.rem(580px);
     font-size: mix.rem(40px);
 
     p,

@@ -1,0 +1,46 @@
+@use '../setup/mixins' as mix;
+@use '../setup/variables' as v;
+
+.carousel .thumbs {
+  display: flex;
+}
+
+@include mix.respond-to(medium) {
+  .med-plant-carousel {
+    display: flex;
+    position: relative;
+    margin-top: 20px;
+    // margin-left: calc((100% - mix.rem(850px)) / 2 - ((100vw - 720px) / 2));
+    // margin-left: calc((100% - mix.rem(450px)) / 2);
+  }
+
+  .med-pop-img-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    width: mix.rem(150px);
+    cursor: pointer;
+
+  }
+
+  .carousel-root {
+    display: flex;
+    flex-direction: column;
+    width: mix.rem(346px);
+  }
+
+  .carousel .thumbs-wrapper {
+    margin: 1px !important;
+  }
+
+  .carousel .thumbs {
+    padding: 0;
+  }
+
+  .carousel .slider-wrapper.axis-horizontal .slider .slide {
+    display: flex;
+    align-items: center;
+  }
+}

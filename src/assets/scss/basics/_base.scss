@@ -1,20 +1,36 @@
 @use '../setup/variables' as v;
 @use '../setup/mixins' as mix;
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 * {
-    font-family: Assistant;
-    margin: auto;
+  font-family: Assistant;
+  margin: auto;
+}
+
+ul,
+li {
+  list-style: none;
 }
 
 body {
-    width: 1920px;
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  max-width: 1920px;
+  min-width: 320px;
 }
 
+
 button {
-    width: mix.rem(122px);
-    height: mix.rem(44px);
-    border-radius: 50px 50px 50px 50px;
-    background-color: v.$clr3;
-    color: v.$clr5;
-    font-size: v.$font-size-20;
+  width: mix.rem(122px);
+  height: mix.rem(44px);
+  border-radius: 50px 50px 50px 50px;
+  background-color: v.$clr3;
+  color: v.$clr5;
+  font-size: v.$font-size-20;
 }
+

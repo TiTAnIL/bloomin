@@ -18,29 +18,11 @@
             justify-content: center
         }
     }
-
-    .input-group {
-        display: flex;
-        align-items: center;
-
-        input[type="text"],
-        textarea {
-            width: 70%;
-            margin-right: 10px;
-        }
-        
-        button {
-            background-color: #ccc;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            cursor: pointer;
-        }
+    textarea {
+        // white-space: pre-wrap;
+        // word-wrap: break-word;
+        // overflow-wrap: break-word;
+        max-width: 600px; /* adjust to your desired character limit */
     }
 }
 

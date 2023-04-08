@@ -1,15 +1,51 @@
 @use '../setup/variables' as v;
 @use '../setup/mixins' as mix;
 
-
 .plants-cards {
+  display: grid;
+  margin-left: mix.rem(100px);
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  column-gap: 1.5em;
+  row-gap: 2.5em;
+  padding: 0;
+  margin-top: 10px;
+  @include mix.respond-to(medium) {
+    // margin-left: 40px;
     display: flex;
-    flex-direction: column;
+    // margin-left: mix.rem(250px);
+  }
 }
 
 .card-layout {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: mix.rem(23px);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  grid-gap: mix.rem(23px);
+}
+
+.preview-card {
+  width: 100%;
+}
+
+.card-layout {
+  @include mix.respond-to(highest) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  
+
+  @include mix.respond-to(high) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include mix.respond-to(medium) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  @include mix.respond-to(low) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-auto-rows: minmax(0, 1fr);
+  }
+}
+

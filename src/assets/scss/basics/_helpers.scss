@@ -2,14 +2,19 @@
 @use '../setup/mixins' as mix;
 
 /* Character Styles */
+
 .assistant-reg-20pt {
     font-family: Assistant;
     font-style: normal;
     font-weight: normal;
-    font-size: mix.rem(20px);
+    font-size: 1rem;
     line-height: mix.rem(26px);
     letter-spacing: 0;
     color: var(v.$clr3);
+
+    @include mix.respond-to(medium) {
+        font-size: mix.rem(14px);
+    }
 }
 
 .assistant-—-72pt-h1,
@@ -21,6 +26,11 @@ h1 {
     line-height: mix.rem(86px);
     letter-spacing: 0;
     color: v.$clr5;
+
+    @include mix.respond-to(medium) {
+        font-size: mix.rem(32px);
+        line-height: mix.rem(32px);
+    }
 }
 
 .assistant-—-30pt-h2,
@@ -32,6 +42,15 @@ h2 {
     line-height: mix.rem(40px);
     letter-spacing: 0;
     color: v.$clr3;
+
+    @include mix.respond-to(high) {
+        font-size: mix.rem(20px);
+        line-height: mix.rem(30px);
+    }
+    @include mix.respond-to(medium) {
+        font-size: mix.rem(15px);
+        line-height: mix.rem(15px);
+    }
 }
 
 .char-style-1 {
@@ -42,6 +61,10 @@ h2 {
     line-height: mix.rem(26px);
     letter-spacing: 0;
     color: v.$clr5;
+
+    @include mix.respond-to(medium) {
+        font-size: mix.rem(14px);
+    }
 }
 
 .char-style-2 {
@@ -52,6 +75,10 @@ h2 {
     line-height: mix.rem(26px);
     letter-spacing: 0;
     color: v.$clr5;
+
+    @include mix.respond-to(medium) {
+        font-size: mix.rem(14px);
+    }
 }
 
 .spanner {
@@ -67,8 +94,8 @@ h2 {
 }
 
 .deactive-btn {
-   opacity: .5;
-   cursor:not-allowed
+    opacity: .5;
+    cursor: not-allowed
 }
 
 .pointer {
@@ -77,4 +104,16 @@ h2 {
 
 .border {
     border-bottom: 1px v.$clr4 solid;
+}
+
+.med-only {
+    display: none;
+
+    @include mix.respond-to(medium) {
+        display: block;
+    }
+}
+
+.no-border {
+    border: none;
 }

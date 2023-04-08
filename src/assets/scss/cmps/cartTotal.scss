@@ -1,0 +1,23 @@
+@use '../setup/mixins' as mix;
+@use '../setup/variables' as v;
+
+
+.cart-icon {
+    text-decoration: none;
+    color: black;
+    position: relative;
+    img {
+        width: 20px;
+    }
+}
+
+.cart-ico-total {
+    position: absolute;
+    padding: mix.rem(2px);
+    border-radius: 50% 50% 50% 50%;
+    background-color: rgba(150, 42, 42, 0.362);
+    margin-left: -5px;
+    span {
+        color: red;
+    }
+}

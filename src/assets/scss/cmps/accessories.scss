@@ -7,17 +7,34 @@
     display: flex;
     flex-direction: column;
 
-    div {
+    & div {
         display: flex;
         flex-direction: column;
     }
 
-    .accessory {
+    & .accessory {
         display: flex;
         flex-direction: row;
-    }
 
-    img:not(last-child) {
-        margin-left: mix.rem(27px);
+        @include mix.respond-to(medium) {
+            flex-direction: column;
+        }
+
+        & div {
+            display: flex;
+            border: 1px solid v.$clr4;
+            padding: mix.rem(13.5px);
+
+
+            &:not(:first-child) {
+                margin-left: mix.rem(10px);
+            }
+
+            @include mix.respond-to(medium) {
+                &:not(:first-child) {
+                    margin-top: 10px;
+                }
+            }
+        }
     }
 }

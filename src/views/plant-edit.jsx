@@ -24,6 +24,7 @@ export function Edit(props) {
             .catch((err) => {
                 console.log('err:', err)
             })
+            console.log(plant, plantId)
     }, [])
 
 
@@ -93,7 +94,7 @@ export function Edit(props) {
             <div className="form-container">
                 <form>
                     <label htmlFor="name">Name:</label>
-                    <input type="text" id="name" name="name" value={plant.name} onChange={handleChange} required />
+                    <input type="text" id="name" name="name" maxLength={17} value={plant.name} onChange={handleChange} required />
                     <div className="form-field">
                         <label htmlFor="diameter">Diameter:</label>
                         <div className="increment-decrement">
@@ -127,7 +128,7 @@ export function Edit(props) {
                         <option value="Pro">Pro</option>
                     </select>
                     <label htmlFor="about">About:</label>
-                    <textarea id="about" name="about" value={plant.about} onChange={handleChange} rows="6" cols="100" maxLength="500" />
+                    <textarea id="about" name="about" value={plant.about} onChange={handleChange} wrap="hard" rows="6" cols="100" maxLength="300" />
                 </form>
             </div>
             <div className="image-preview-container">

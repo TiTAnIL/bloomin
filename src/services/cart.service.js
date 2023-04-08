@@ -36,12 +36,14 @@ async function query() {
 }
 
 async function remove(itemId) {
+    console.log(itemId)
     await storageService.remove(STORAGE_KEY, itemId)
     cartChannel.postMessage(getActionRemoveItem(itemId))
 }
 
 async function save(item) {
     var savedCart
+    console.log('item,', item)
     // if (item._id) {
     // savedCart = await storageService.put(STORAGE_KEY, item)
     // cartChannel.postMessage(getActionUpdateItem(savedCart))

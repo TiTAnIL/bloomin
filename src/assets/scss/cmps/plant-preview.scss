@@ -1,13 +1,55 @@
 @use '../setup/variables' as v;
+@use '../setup/mixins' as mix;
 
-.plant-controls {
-    display: flex;
-    flex-direction: row;
-}
 
 .plants-list {
     display: flex;
     flex-direction: column;
     text-decoration: none;
     color: v.$clr3;
+    position: relative;
+    border: 1px solid v.$clr3;
+    transition: opacity 0.9s ease-in-out;
+
+    & img,
+    & a {
+        margin: 0;
+    }
+}
+
+.plant-controls {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    color: #fff;
+    z-index: 100;
+    cursor: default;
+}
+
+.plants-list:hover .plant-controls {
+    background-color: v.$clr5;
+}
+
+.plants-list:hover .on-img-btn {
+    opacity: 1;
+}
+
+.on-img-btn {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    padding: 5px;
+    font-size: mix.rem(21px);
+    cursor: pointer;
+    margin: 0;
+    z-index: 100;
+}
+
+.on-img-btn.edit {
+    padding: 10px 1px 10px 1px;
+}
+
+.on-img-btn.delete {
+    color: red;
 }

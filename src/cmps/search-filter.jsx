@@ -52,6 +52,7 @@ export function SearchFilter(props) {
         const name = new URLSearchParams(location.search).get("name")
         if (query) {
             const filterParams = query
+            console.log(name)
             if (name) {
                 setNameFilter(decodeURIComponent(name))
             }
@@ -135,7 +136,6 @@ export function SearchFilter(props) {
         setWateringFilter(null)
         setPriceRangeFilter({ min: 0, max: 1000 })
     }
-
 
     return (
         <section className='filter-container'>

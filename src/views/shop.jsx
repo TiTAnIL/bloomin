@@ -1,9 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { loadPlants, setFilterBy } from '../store/actions/plant.actions.js'
-
-import queryString from 'query-string'
 
 import { PlantList } from '../cmps/plants-list'
 import { SearchFilter } from '../cmps/search-filter'
@@ -17,9 +15,33 @@ export function Shop(props) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const location = useLocation()
+    const [isFiltersOpen, setIsFiltersOpen] = useState(false)
+    const filtersRef = useRef(null)
+    const [isFirstLoad, setIsFirstLoad] = useState(true);
+    const [screenSize, setScreenSize] = useState('highest'); // set initial screen size to highest
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth <= 600) {
+                setScreenSize('small')
+            } else if (window.innerWidth <= 900) {
+                setScreenSize('medium')
+            } else if (window.innerWidth <= 1200) {
+                setScreenSize('high')
+            } else {
+                setScreenSize('highest')
+            }
+        }
+
+        handleResize()
+
+        window.addEventListener('resize', handleResize)
+
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
 
 
-    function onChangeFilter (filterBy) {
+    function onChangeFilter(filterBy) {
         const params = new URLSearchParams()
         if (filterBy.locations) {
             params.set('locations', encodeURIComponent(JSON.stringify(filterBy.locations)))
@@ -40,14 +62,22 @@ export function Shop(props) {
             params.set('name', encodeURIComponent(JSON.stringify(filterBy.name)))
         }
         const queryStringParams = params.toString()
-        navigate(`/shop?${queryStringParams}`)
+        if (isFirstLoad) {
+            dispatch(setFilterBy(filterBy))
+            dispatch(loadPlants())
+            setIsFirstLoad(false)
+          } else {
+            navigate(`/shop?${queryStringParams}`)
+            dispatch(setFilterBy(filterBy))
+            dispatch(loadPlants())
+          }
         dispatch(setFilterBy(filterBy))
         dispatch(loadPlants())
     }
 
     const idxLastPlant = currentPage * plantsPerPage
     const idxFirstPlant = idxLastPlant - plantsPerPage
-    const currentPlants = plants ? plants.slice(idxFirstPlant, idxLastPlant) : [];
+    const currentPlants = plants ? plants.slice(idxFirstPlant, idxLastPlant) : []
 
     const pageNumbers = []
     for (let i = 1; i <= Math.ceil(plants.length / plantsPerPage); i++) {
@@ -67,9 +97,61 @@ export function Shop(props) {
         )
     })
 
-    const handleDropdown = (event) => {
-        setPlantsPerPage(event.target.value)
+    const handlePageChange = (event) => {
+        if (event.target.value === 'next' && currentPage < Math.ceil(plants.length / plantsPerPage)) {
+            setCurrentPage(currentPage + 1)
+        } else if (event.target.value === 'prev' && currentPage > 1) {
+            setCurrentPage(currentPage - 1)
+        }
     }
+
+    const handleDropdown = (event) => {
+            setPlantsPerPage(event.target.value)
+            setCurrentPage(1)
+    }
+
+    const openFilters = () => {
+        setIsFiltersOpen(true)
+    }
+
+    const closeFilters = () => {
+        setIsFiltersOpen(false)
+    }
+
+    // const handleClickOutside = (event) => {
+    //     if (
+    //         filtersRef.current &&
+    //         !filtersRef.current.contains(event.target) &&
+    //         !event.target.classList.contains("sidenav-openbtn")
+    //     ) {
+    //         closeFilters();
+    //     }
+    // }
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                filtersRef.current &&
+                !filtersRef.current.contains(event.target) &&
+                !event.target.classList.contains("sidenav-openbtn")
+            ) {
+                closeFilters()
+            }
+        }
+
+        document.addEventListener("click", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        }
+    }
+    )
+
+    const filterBar = {
+        display: isFiltersOpen ? 'block' : 'none',
+        filterContainer: `mid-fiter hide-on-${screenSize}`
+    }
+
 
 
     if (isLoading)
@@ -84,26 +166,42 @@ export function Shop(props) {
             {" "}
         </LoadingScreen>
 
+
     return (
-        <main>
-            <Link to='/plant/edit/'>
-                <button>Add Plant</button>
-            </Link>
+        <section className='main-shop-layout'>
+            <div>
+                <h2>shop</h2>
+            </div>
+            <div className='buttons-wraper'>
+                <button className="sidenav-openbtn" onClick={() => openFilters()}>Filters</button>
+                <Link to='/plant/edit/'>
+                    <button>Add Plant</button>
+                </Link>
+            </div>
             <div className='shop-container'>
-                <SearchFilter onChangeFilter={onChangeFilter} />
+                <div className='filter-display'>
+                    <SearchFilter onChangeFilter={onChangeFilter} />
+                </div>
+                <div className='mid-fiter' style={filterBar} ref={filtersRef}>
+                    <SearchFilter onChangeFilter={onChangeFilter} />
+                </div>
                 <PlantList plants={currentPlants} />
             </div>
-            <ul id="page-numbers" className='pagination'>Page: {renderPageNums}
-            </ul>
-            <label htmlFor="ipp">Item per page:
-                <select onChange={handleDropdown}>
-                    <option value="9">9</option>
-                    <option value="30">30</option>
-                    <option value="50">50</option>
-                </select>
-            </label>
-        </main>
+            <div className='page-controls'>
+                <ul id="page-numbers" className='pagination'>
+                    <button value="prev" onClick={(ev) => handlePageChange(ev)}>⬅️ prev </button>
+                    <span className='page-nums'> Page: {renderPageNums} </span>
+                    <button value="next" onClick={(ev) => handlePageChange(ev)}> next ➡️ </button>
+                </ul>
+                <label htmlFor="ipp">Item per page:
+                    <select onChange={handleDropdown}>
+                        <option value="9">9</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                    </select>
+                </label>
+            </div>
+        </section>
     )
-
 }
 

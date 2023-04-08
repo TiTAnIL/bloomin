@@ -6,17 +6,12 @@
     display: flex;
     flex-direction: column;
     border-right: 1px solid v.$clr4;
-    text-align: left;
 
-    * {
+    & * {
         margin: 0;
     }
 
-    h2 {
-        margin: mix.rem(10px) 0 mix.rem(10px) 0;
-    }
-
-    h2:not(:first-child) {
+    & h2:not(:first-child) {
         border-top: 1px solid v.$clr4;
     }
 }
@@ -29,7 +24,7 @@
 .price-input {
     display: flex;
 
-    input {
+    & input {
         display: flex;
         border-radius: 10px 10px 10px 10px;
         text-align: center;
@@ -38,12 +33,12 @@
         width: mix.rem(65px);
     }
 
-    input[type="number"]::-webkit-outer-spin-button,
-    input[type="number"]::-webkit-inner-spin-button {
+    & input[type="number"]::-webkit-outer-spin-button,
+    & input[type="number"]::-webkit-inner-spin-button {
         -webkit-appearance: none;
     }
 
-    .separator {
+    & .separator {
         width: mix.rem(10px);
         display: flex;
         justify-content: center;
@@ -52,7 +47,7 @@
 
 
 .slider-container {
-margin: mix.rem(10px) 0px mix.rem(25px) 0px;
+    margin: mix.rem(10px) 0px mix.rem(25px) 0px;
 }
 
 .slider-thumb {
@@ -73,5 +68,5 @@ margin: mix.rem(10px) 0px mix.rem(25px) 0px;
 }
 
 .slider-track.track-before {
-        background-color: v.$clr2;
-    }
+    background-color: v.$clr2;
+}

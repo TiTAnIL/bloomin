@@ -1,10 +1,10 @@
 import { PlantPreview } from "./plant-preview"
+import React from 'react'
 
 
 export function PlantList({ plants }) {
-    return (<>
+    return (<React.Fragment>
         <section className="plants-cards">
-            <h2 className='shop-headline'>Shop</h2>
             <div className='card-layout'>
                 {plants.map(plant =>
                     <div className={'preview-card card-ID' + plant._id} key={'plantNum' + plant._id} >
@@ -12,6 +12,6 @@ export function PlantList({ plants }) {
                     </div>)}
             </div>
         </section>
-    </>
+    </React.Fragment>
     )
 }

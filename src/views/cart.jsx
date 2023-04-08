@@ -7,7 +7,6 @@ import LoadingScreen from "react-loading-screen"
 import addSym from '../assets/imgs/main/addSym.png'
 import subSym from '../assets/imgs/main/subSym.png'
 import trash from '../assets/imgs/main/ic-actions-trash.png'
-import blueTrash from '../assets/imgs/main/ic-actions-blue-trash.png'
 
 import { Accessories } from "../cmps/accessories"
 import { CartSummery } from '../cmps/cart-summary'
@@ -20,6 +19,7 @@ export function Cart() {
     const [quantities, setQuantities] = useState(
         items.reduce((acc, item) => ({ ...acc, [item.name]: item.quantity }), {})
     )
+    const [total, setTotal] = useState(0)
     const [greeting, setGreeting] = useState(null)
     const [id, setID] = useState(null)
     const dispatch = useDispatch()
@@ -28,34 +28,45 @@ export function Cart() {
         dispatch(loadCart())
     }, [dispatch, loadCart])
 
-    const onRemoveItem = useCallback( async  (id) => {
+    useEffect(() => {
+        let newTotal = 0
+        items.forEach((item) => {
+            newTotal += item.quantity
+        })
+        setTotal(newTotal)
+    }, [items, setTotal])
+
+
+    const onRemoveItem = useCallback(async (id) => {
         setID(id)
         dispatch(removeItem(id))
     }, [dispatch, id])
 
 
+
+
     if (!items) return <LoadingScreen
-    loading={true}
-    bgColor="rgba(255,255,255,0.5)"
-    spinnerColor="#4850b9"
-    textColor="#676767"
-    logoSrc="../logo.png"
-    text="Loading"
->
-    {" "}
-</LoadingScreen>
+        loading={true}
+        bgColor="rgba(255,255,255,0.5)"
+        spinnerColor="#4850b9"
+        textColor="#676767"
+        logoSrc="../logo.png"
+        text="Loading"
+    >
+        {" "}
+    </LoadingScreen>
     return (
         <section>
             <h2>Shopping Cart</h2>
             <div className='cart-container'>
                 <div className='cart-summery'>
-                    <CartSummery items={items} quantities={quantities} setQuantities={setQuantities}/>
+                    <CartSummery items={items} quantities={quantities} setQuantities={setQuantities} />
                 </div>
                 <table className='shopping-cart'>
                     <thead>
                         <tr className='cart-headings'>
                             <th>Product</th>
-                            <th></th>
+                            <th className='item-name'></th>
                             <th>Amount</th>
                             <th>Price</th>
                             <th>Total</th>
@@ -67,14 +78,14 @@ export function Cart() {
                             return (
                                 <tr key={item.name + utilService.makeId()}>
                                     <td ><img className='cart-item-img' src={item.pic} alt={item.name} /></td>
-                                    <td >{item.name}</td>
+                                    <td className='item-name'>{item.name}</td>
                                     <td >
                                         <div className='item-qunatity no-border'>
-                                         {quantities[item.name] > 1 ?
-                                            <img className='pointer' alt='-' src={subSym} onClick={() => {
+                                            {quantities[item.name] > 1 ?
+                                                <img className='pointer' alt='-' src={subSym} onClick={() => {
                                                     const newQuantity = quantities[item.name] - 1
                                                     setQuantities({ ...quantities, [item.name]: newQuantity })
-                                            }} /> : <img className='deactive-btn' src={subSym} alt='-'/>}
+                                                }} /> : <img className='deactive-btn' src={subSym} alt='-' />}
                                             <p
                                                 onChange={(event) => {
                                                     const newQuantity = Number(event.target.value)
@@ -95,7 +106,10 @@ export function Cart() {
                     </tbody>
                 </table>
             </div>
-            <p>Add a greeting</p>
+            <div className='cart-footer-buttons'>
+                <button>Greeting</button>
+                <button className='cart-buy-btn'>Buy</button>
+            </div>
             <Accessories />
         </section>
     )

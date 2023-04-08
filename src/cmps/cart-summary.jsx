@@ -3,17 +3,17 @@ import { utilService } from '../services/util.service.js';
 
 export function CartSummery({ items, quantities }) {
   const [currQuantity, setQuantity] = useState(0)
-    const [total, setTotal] = useState(0)
+  const [total, setTotal] = useState(0)
 
-    useEffect(() => {
-        let newTotal = 0;
-        items.forEach((item) => {
-          const itemTotal = item.price * quantities[item.name];
-          newTotal += itemTotal;
-        });
-        setTotal(newTotal);
-      }, [items, quantities]);
-      
+  useEffect(() => {
+    let newTotal = 0;
+    items.forEach((item) => {
+      const itemTotal = item.price * quantities[item.name];
+      newTotal += itemTotal;
+    });
+    setTotal(newTotal);
+  }, [items, quantities]);
+
 
   return (
     <section>

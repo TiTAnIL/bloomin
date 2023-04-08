@@ -1,52 +1,104 @@
 @use '../setup/variables' as v;
 @use '../setup/mixins' as mix;
 
-.app-header {
-    height: 10;
-    width: 10;
-}
 
-.header-container {
-    // display: flex;
-    // justify-content: center;
-    // width: 100;
-}
 
 .header-navigators {
     background-color: v.$clr4;
     display: flex;
     height: mix.rem(100px);
-    // flex-wrap: nowrap;
-    // justify-content: space-evenly;
-    // align-items: flex-end;
 
-    ul {
-        padding-inline-start: 0px;
-        margin-block-start: 0;
-        margin-block-end: 0;
-    }
+    & .header-large {
+        flex-grow: 2;
 
-    .navigators-container {
-        list-style-type: none;
-        display: flex;
-        margin: 0;
-        gap: mix.rem(80px);
+        & .navigators-container {
+            // gap: mix.rem(70px);
+            display: flex;
+            min-width: 20px;
+            max-width: mix.rem(1000px);
+            justify-content: flex-end;
+            // margin-left: mix.rem(70px);
+
+
+           & .navigators {
+                color: v.$clr3;
+                text-decoration: none;
+                padding: mix.rem(10px);
+            }
+        }
     }
+}
+
+.sidenav-openbtn {
+    display: none;
+    margin-right: mix.rem(20px);
+    margin-left: mix.rem(20px);
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: v.$clr3;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    display: block;
+    transition: 0.3s;
+    color: #f1f1f1;
+}
+
+
+.sidenav a:hover {
+    color: v.$clr2;
+}
+
+.header-med {
+    display: flex;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    margin-left: mix.rem(10px);
+}
+
+.lang {
+    display: block;
+}
+
+.lang-med {
+    background-color: v.$clr2;
+    margin: mix.rem(15px) 0 mix.rem(15px) mix.rem(15px);
+}
+
+.med-header-logo {
+    display: none;
 }
 
 .header-opt {
     display: flex;
-    list-style-type: none;
-    margin: 0;
-    margin-left: mix.rem(108px);
+    float: right;
 
-    li {
+    & li {
         margin-right: mix.rem(52px);
 
-        form {
+        & form {
             border-bottom: 1px solid black;
         }
     }
+}
+
+.header-opt-med {
+    display: none;
+
 }
 
 .header-logo {
@@ -55,35 +107,146 @@
     width: mix.rem(234px);
 }
 
-.navigators {
-    color: v.$clr3;
-    border-bottom: none;
-    text-decoration: none;
+.nav-Blogo {
+    width: mix.rem(80px);
+    margin-left: mix.rem(10px);
 }
 
+
 .search-icon {
+    cursor: pointer;
 
     img {
-        width: 10px;
+        // width: 20px;
+        // position: absolute;
     }
 }
 
 .search-input {
     background-color: v.$clr4;
     border: none;
-
+    text-decoration: none;
 }
 
 input:focus-visible {
     outline: none;
 }
 
-.cart-icon {
-    img {
-        width: 20px;
+.header-logo {
+    margin: 0;
+}
+
+@include mix.respond-to(high) {
+
+
+    .header-opt {
+        display: block;
+
+        & li {
+            padding: 10px;
+        }
     }
 }
 
-.background-color4 {
-    background-color: v.$clr4;
+@include mix.respond-to(medium) {
+
+    .header-large {
+        display: none;
+        margin: 0;
+    }
+
+    .sidenav-openbtn {
+        display: block;
+    }
+
+    .lang {
+        display: none;
+    }
+
+    .sidenav {
+        padding-top: mix.rem(15px);
+    }
+
+    .med-header-logo {
+        display: inline-block;
+        width: mix.rem(97px);
+    }
+
+    // .logo-container {
+    //     flex-grow: 1;
+    //     & a {
+    //         margin: 0;
+    //     }
+    // }
+
+    .navigators-container {
+        justify-content: center;
+
+        & li {
+            margin: 0 10px;
+        }
+    }
+
+    .med-logo-container {
+        // margin-left: mix.rem(50px);
+    }
+
+    .header-opt {
+        display: none;
+    }
+
+    .header-opt-med {
+        display: flex;
+        margin: 0;
+
+        & li {
+            margin-right: mix.rem(52px);
+
+            & form {
+                border-bottom: 1px solid black;
+
+                border-bottom: 0px solid transparent;
+            }
+        }
+
+        margin-left: mix.rem(20px);
+
+        & li {
+            margin-right: mix.rem(15px);
+        }
+
+        position: relative;
+    }
+
+    .header-logo {
+        margin: 0;
+
+        img {
+            width: 100px;
+        }
+    }
+
+    .navigators {
+        display: none;
+    }
+
+    // .search-icon {
+    //     position: absolute;
+    // }
+
+    .search-input {
+        background: url("../../imgs/ic-actions-search.png") no-repeat right center;
+        background-position: left center;
+        // display: none;
+        // outline: solid;
+        transition: 0.3s;
+        // width: mix.rem(80px)
+        border-bottom: 1px solid black;
+        padding-left: mix.rem(20px);
+    }
+
+    input:focus-visible {
+        outline: solid;
+    }
+
 }

@@ -3,6 +3,7 @@ import { vaseService } from "../../services/vase.service"
 
 
 export function loadVases() {
+    // console.log('accessory action')
     return async (dispatch, getState) => {
         const { filterBy } = getState() //.accessoryModule
         const vases = await vaseService.query()

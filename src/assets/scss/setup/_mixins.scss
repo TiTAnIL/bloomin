@@ -1,10 +1,34 @@
-// REM Functions
 @function rem($size) {
-    $remSize: calc($size / 16px);
-    @return calc($remSize * 1rem);
+  $remSize: calc($size / 16px);
+  @return calc($remSize * 1rem);
 }
 
-// EM Functions
 @function em($pixels, $context: 16px) {
-    @return calc(($pixels/$context) * 1em);
+  @return calc(($pixels/$context) * 1em);
+}
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == low {
+    @media (max-width: 550px) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == medium {
+    @media (max-width: 750px) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == high {
+    @media (max-width: 1050px) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == highest {
+    @media (max-width: 1400px) {
+      @content;
+    }
+  }
 }
