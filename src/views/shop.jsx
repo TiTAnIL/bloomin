@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { loadPlants, setFilterBy } from '../store/actions/plant.actions.js'
 
 import { PlantList } from '../cmps/plants-list'
@@ -17,29 +17,8 @@ export function Shop(props) {
     const location = useLocation()
     const [isFiltersOpen, setIsFiltersOpen] = useState(false)
     const filtersRef = useRef(null)
-    const [isFirstLoad, setIsFirstLoad] = useState(true);
-    const [screenSize, setScreenSize] = useState('highest'); // set initial screen size to highest
-
-    useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth <= 600) {
-                setScreenSize('small')
-            } else if (window.innerWidth <= 900) {
-                setScreenSize('medium')
-            } else if (window.innerWidth <= 1200) {
-                setScreenSize('high')
-            } else {
-                setScreenSize('highest')
-            }
-        }
-
-        handleResize()
-
-        window.addEventListener('resize', handleResize)
-
-        return () => window.removeEventListener('resize', handleResize)
-    }, [])
-
+    const barRef = useRef(null)
+    const [isFirstLoad, setIsFirstLoad] = useState(true)
 
     function onChangeFilter(filterBy) {
         const params = new URLSearchParams()
@@ -66,11 +45,11 @@ export function Shop(props) {
             dispatch(setFilterBy(filterBy))
             dispatch(loadPlants())
             setIsFirstLoad(false)
-          } else {
+        } else {
             navigate(`/shop?${queryStringParams}`)
             dispatch(setFilterBy(filterBy))
             dispatch(loadPlants())
-          }
+        }
         dispatch(setFilterBy(filterBy))
         dispatch(loadPlants())
     }
@@ -106,53 +85,56 @@ export function Shop(props) {
     }
 
     const handleDropdown = (event) => {
-            setPlantsPerPage(event.target.value)
-            setCurrentPage(1)
+        setPlantsPerPage(event.target.value)
+        setCurrentPage(1)
+    }
+
+    const handleFilters = () => {
+        setIsFiltersOpen(true)
     }
 
     const openFilters = () => {
         setIsFiltersOpen(true)
     }
 
+
     const closeFilters = () => {
         setIsFiltersOpen(false)
     }
 
-    // const handleClickOutside = (event) => {
-    //     if (
-    //         filtersRef.current &&
-    //         !filtersRef.current.contains(event.target) &&
-    //         !event.target.classList.contains("sidenav-openbtn")
-    //     ) {
-    //         closeFilters();
-    //     }
-    // }
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (
-                filtersRef.current &&
-                !filtersRef.current.contains(event.target) &&
-                !event.target.classList.contains("sidenav-openbtn")
-            ) {
-                closeFilters()
+            if (barRef.current && !barRef.current.contains(event.target)
+                &&
+                !event.target.classList.contains('sidenav-openbtn')) {
+                setIsFiltersOpen(false);
             }
         }
 
-        document.addEventListener("click", handleClickOutside);
+        document.addEventListener('click', handleClickOutside);
 
         return () => {
-            document.removeEventListener("click", handleClickOutside);
+            document.removeEventListener('click', handleClickOutside);
+        }
+    }, [])
+
+
+    const handleResize = () => {
+        if (window.innerWidth > 750) {
+            setIsFiltersOpen(true)
+        } else {
+            setIsFiltersOpen(false)
         }
     }
-    )
 
-    const filterBar = {
-        display: isFiltersOpen ? 'block' : 'none',
-        filterContainer: `mid-fiter hide-on-${screenSize}`
-    }
+    useEffect(() => {
+        window.addEventListener('resize', handleResize)
 
-
+        return () => {
+            window.removeEventListener('resize', handleResize)
+        }
+    })
 
     if (isLoading)
         return <LoadingScreen
@@ -179,11 +161,8 @@ export function Shop(props) {
                 </Link>
             </div>
             <div className='shop-container'>
-                <div className='filter-display'>
-                    <SearchFilter onChangeFilter={onChangeFilter} />
-                </div>
-                <div className='mid-fiter' style={filterBar} ref={filtersRef}>
-                    <SearchFilter onChangeFilter={onChangeFilter} />
+                <div className='filter-display' style={{ display: isFiltersOpen ? 'block' : 'none' }} ref={barRef}>
+                    <SearchFilter onChangeFilter={onChangeFilter} ref={filtersRef} />
                 </div>
                 <PlantList plants={currentPlants} />
             </div>

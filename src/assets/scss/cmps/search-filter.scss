@@ -1,72 +1,87 @@
-@use '../setup/variables' as v;
 @use '../setup/mixins' as mix;
+@use '../setup/variables' as v;
 
 
-.filter-container {
+.main-shop-layout {
     display: flex;
     flex-direction: column;
-    border-right: 1px solid v.$clr4;
+    flex-wrap: wrap;
+    flex: 2;
+}
+
+.shop-container {
+    display: flex;
+}
+
+.pagination {
+    margin-top: mix.rem(64px);
+    margin-right: mix.rem(20px);
+    display: flex;
+    flex-direction: row;
+    font-size: mix.rem(17px);
+    gap: 20px;
+
+    & li {
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        font-size: 20px;
+        display: flex;
+        border: 1px #3948318d solid;
+        padding: 0px mix.rem(14px) 0px mix.rem(14px);
+        cursor: pointer;
+    }
+
+    & .cur-page {
+        color: v.$clr3;
+        background-color: v.$clr1;
+    }
+
+    & .page-nums {
+        display: flex;
+
+        & :active {
+            background-color: v.$clr2;
+            border: 1px v.$clr2 solid;
+        }
+
+    }
+
+    @include mix.respond-to(low) {
+        flex-direction: column;
+    }
+}
+
+.page-controls {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.buttons-wraper {
+    display: flex;
 
     & * {
         margin: 0;
     }
+}
 
-    & h2:not(:first-child) {
-        border-top: 1px solid v.$clr4;
+.filter-display {
+    margin: 0;
+    height: 10%;
+    position: sticky;
+    top: 0;
+    background-color: v.$clr5;
+    display: block;
+
+    @include mix.respond-to(medium) {
+        display: none;
     }
-}
 
-.price-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.price-input {
-    display: flex;
-
-    & input {
+    .buttons-wraper {
         display: flex;
-        border-radius: 10px 10px 10px 10px;
-        text-align: center;
-        border: 1px solid #999;
-        -moz-appearance: textfield;
-        width: mix.rem(65px);
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-content: flex-start;
     }
-
-    & input[type="number"]::-webkit-outer-spin-button,
-    & input[type="number"]::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-    }
-
-    & .separator {
-        width: mix.rem(10px);
-        display: flex;
-        justify-content: center;
-    }
-}
-
-
-.slider-container {
-    margin: mix.rem(10px) 0px mix.rem(25px) 0px;
-}
-
-.slider-thumb {
-    width: mix.rem(15px);
-    height: mix.rem(15px);
-    border: 1px solid black;
-    border-radius: 50%;
-    cursor: grab;
-    background-color: v.$clr2;
-}
-
-.slider-track {
-    height: mix.rem(15px);
-    background: white;
-    border: 1px solid black;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.slider-track.track-before {
-    background-color: v.$clr2;
 }
