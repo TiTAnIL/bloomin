@@ -29,7 +29,7 @@ export function loadPlants() {
   return async (dispatch, getState) => {
     const { filterBy } = getState().plantModule
     const plants = await plantService.query(filterBy)
-    dispatch({ type: 'SET_PLANTS', plants })
+    dispatch({ type: 'SET_PLANTS', plants })     
     dispatch({ type: 'SET_LOADING', isLoading: false })
   }
 }
