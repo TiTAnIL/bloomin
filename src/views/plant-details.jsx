@@ -17,7 +17,6 @@ export const PlantDetails = () => {
     const params = useParams()
     const [plant, setPlant] = useState(null)
 
-
     const loadPlant = () => {
         const plantId = params.id
         plantService.getById(plantId).then(plant => {
@@ -25,21 +24,20 @@ export const PlantDetails = () => {
         })
     }
 
-
     useEffect(() => {
         loadPlant()
     }, [])
 
-    if (!plant) return <LoadingScreen
-    loading={true}
-    bgColor="rgba(255,255,255,0.5)"
-    spinnerColor="#4850b9"
-    textColor="#676767"
-    logoSrc="../logo.png"
-    text="Loading"
->
-    {" "}
-</LoadingScreen>
+    if (plant === null) return <LoadingScreen
+        loading={true}
+        bgColor="rgba(255,255,255,0.5)"
+        spinnerColor="#4850b9"
+        textColor="#676767"
+        logoSrc="../logo.png"
+        text="Loading"
+    >
+        {" "}
+    </LoadingScreen>
     return <>
         <main className="plant-container">
             <section className="plant-details">
@@ -51,10 +49,10 @@ export const PlantDetails = () => {
                 <Vases plant={plant} />
             </section>
             <section className="plant-preview">
-                <img className="main-image" src={plant.pic[0]}></img>
+                <img className="main-image" src={plant.pic[0]} alt={`mainImg${plant.id}`} ></img>
                 <div className="enlarge-image">
-                    <img src={plant.pic[1]}></img>
-                    <img src={plant.pic[2]}></img>
+                    <img src={plant.pic[1]} alt={`img2${plant.id}`}></img>
+                    <img src={plant.pic[2]} alt={`img3${plant.id}`}></img>
                 </div>
             </section>
         </main>
@@ -89,9 +87,8 @@ export const PlantDetails = () => {
                 <p className="assistant-reg-20pt">{plant.about}</p>
                 <img alt="breaker" src={breaker} />
             </div>
-        <FAQ />
-        <Accessories />
+            <FAQ />
+            <Accessories />
         </section>
-
     </>
 }

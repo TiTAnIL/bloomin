@@ -19,39 +19,39 @@ export function Shop(props) {
     const filtersRef = useRef(null)
     const barRef = useRef(null)
     const [isFirstLoad, setIsFirstLoad] = useState(true)
+    const [filters, setFilters] = useState({
+        name: '',
+        difficulty: '',
+        lightning: '',
+        watering: '',
+        priceRange: '',
+        locations: '',
+    })
 
-    function onChangeFilter(filterBy) {
-        const params = new URLSearchParams()
-        if (filterBy.locations) {
-            params.set('locations', encodeURIComponent(JSON.stringify(filterBy.locations)))
-        }
-        if (filterBy.difficulty) {
-            params.set('difficulty', encodeURIComponent(JSON.stringify(filterBy.difficulty)))
-        }
-        if (filterBy.lightning) {
-            params.set('lightning', encodeURIComponent(JSON.stringify(filterBy.lightning)))
-        }
-        if (filterBy.watering) {
-            params.set('watering', encodeURIComponent(JSON.stringify(filterBy.watering)))
-        }
-        if (filterBy.priceRange) {
-            params.set('priceRange', encodeURIComponent(JSON.stringify(filterBy.priceRange)))
-        }
-        if (filterBy.name) {
-            params.set('name', encodeURIComponent(JSON.stringify(filterBy.name)))
-        }
-        const queryStringParams = params.toString()
+    useEffect(() => {
+        console.log('plants useEffect')
+        if (!plants || !plants.length) dispatch(loadPlants())
+    }, []);
+
+    const onChangeFilter = (filterBy) => {
+        console.log('is first load', isFirstLoad)
         if (isFirstLoad) {
-            dispatch(setFilterBy(filterBy))
-            dispatch(loadPlants())
+            console.log('first load')
             setIsFirstLoad(false)
-        } else {
-            navigate(`/shop?${queryStringParams}`)
-            dispatch(setFilterBy(filterBy))
-            dispatch(loadPlants())
+            return
         }
-        dispatch(setFilterBy(filterBy))
-        dispatch(loadPlants())
+        console.log('filters changed', filters)
+        const queryParams = new URLSearchParams(location.search)
+        for (const key in filters) {
+            if (filters[key]) {
+                queryParams.set(key, filters[key])
+            } else {
+                queryParams.delete(key)
+            }
+        }
+        console.log('query params', queryParams.toString())
+        // navigate('/shop?' + queryParams.toString())
+        setFilters(filterBy)
     }
 
     const idxLastPlant = currentPage * plantsPerPage
@@ -89,18 +89,18 @@ export function Shop(props) {
         setCurrentPage(1)
     }
 
-    const handleFilters = () => {
-        setIsFiltersOpen(true)
-    }
+    // const handleFilters = () => {
+    //     setIsFiltersOpen(true)
+    // }
 
     const openFilters = () => {
         setIsFiltersOpen(true)
     }
 
 
-    const closeFilters = () => {
-        setIsFiltersOpen(false)
-    }
+    // const closeFilters = () => {
+    //     setIsFiltersOpen(false)
+    // }
 
 
     useEffect(() => {
@@ -156,7 +156,7 @@ export function Shop(props) {
             </div>
             <div className='buttons-wraper'>
                 <button className="sidenav-openbtn" onClick={() => openFilters()}>Filters</button>
-                <Link to='/plant/edit/'>
+                <Link to='/shop/plant/edit/'>
                     <button>Add Plant</button>
                 </Link>
             </div>

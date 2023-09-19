@@ -30,14 +30,13 @@ export function BloomApp() {
 
     const currPlants = plants.slice(0, 4)
 
-    if (!plants) return <h2>Loading</h2>
+    if (!plants || !plants.length) return <h2>Loading</h2>
     return (
         <>
             <section className="cfa-container">
-
                 <div className='cfa'>
-                    <h1>Match the pots</h1>
-                    <h1>to you</h1>
+                    <h1>Sprout Your Style</h1>
+                    <h1>Pot Your Passion</h1>
                     <div className="cfa-btns">
                         <NavLink className="" to='/shop'>
                             <button>Store</button>
@@ -89,8 +88,8 @@ export function BloomApp() {
                     <ul className='most-pop-list'>
                         {currPlants.map(plant => {
                             return (<div key={plant.name + 'container'} className='pop-img-container'>
-                                <li key={plant.neme}>
-                                    <img onClick={() => navigate(`/plant/${plant._id}`)} key={plant.name + 'image'} className='pop-img' src={plant.pic} alt='name' />
+                                <li key={plant.name}>
+                                    <img onClick={() => navigate(`/shop/${plant._id}`)} key={plant.name + 'image'} className='pop-img' src={plant.pic} alt='name' />
                                     <p key={plant.name + 'para'}>{plant.name}</p>
                                     <p key={plant.name + plant.price}>{plant.price}</p>
                                 </li>

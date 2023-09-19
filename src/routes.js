@@ -19,11 +19,7 @@ const routes = [
         component: <About />,
     },
     {
-        path: '/shop/',
-        component: <Shop />
-    },
-    {
-        path: '/shop:',
+        path: '/shop',
         component: <Shop />
     },
     {
@@ -35,7 +31,7 @@ const routes = [
         component: <Match />
     },
     {
-        path: '/plant/:id',
+        path: '/shop/:id',
         component: <PlantDetails />
     },
     {
@@ -43,11 +39,11 @@ const routes = [
         component: <Cart />
     },
     {
-        path: '/plant/edit/:id',
+        path: '/shop/edit/:id',
         component: <Edit />
     },
     {
-        path: '/plant/edit/',
+        path: '/shop/edit/',
         component: <Edit />
     },
 ]

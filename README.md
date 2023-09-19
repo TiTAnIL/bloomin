@@ -1,16 +1,23 @@
 # Bloomin
 
 ## pixel-perfect Build from Ui\UX design using Adobe XD
+## MERN app for buying plants
 ## full implemantation of CRUD 
 
 # Used tools:
 
-## React with Hooks, Redux-thunk, Sass(SCSS) and loadsh
+## Front-End
+### React with Hooks, Redux-thunk, Sass(SCSS) and loadsh
+
+## Back-End
+### NodeJs, Express
+
+## MongoDB
 
 # Video Demo: showing functionality
 ### `https://youtu.be/K5mUE-4myuA`
 
-## Bloomin is an e-commerce web application for buying plants. The app is built using React and Redux
+## Bloomin is an e-commerce web application for buying plants.
 
     Browse a variety of plants for sale
     Filter plants by location, difficulty, lighting, watering, and price range

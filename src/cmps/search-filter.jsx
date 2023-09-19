@@ -1,140 +1,120 @@
 import { useEffect, useState } from 'react'
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import debounce from 'lodash/debounce'
 import { useDispatch } from 'react-redux';
 import ReactSlider from 'react-slider'
 import { eventBusService } from '../services/event-bus.service'
 import queryString from 'query-string'
+import { set } from 'lodash';
 
-export function SearchFilter(props) {
-    const [nameFilter, setNameFilter] = useState(null)
-    const [locationFilters, setLocationFilters] = useState({
-        Home: false,
-        Office: false,
-        Balcony: false,
-        Yard: false,
-    })
-    const [difficultyFilter, setDifficultyFilter] = useState(null)
-    const [lightningFilter, setLightningFilter] = useState(null)
-    const [wateringFilter, setWateringFilter] = useState(null)
-    const [priceRangeFilter, setPriceRangeFilter] = useState({
-        min: 0,
-        max: 1000,
-    })
 
-    const filterDelay = 2500
-    const filterData = debounce(() => {
-        props.onChangeFilter({
-            name: nameFilter,
-            difficulty: difficultyFilter,
-            lightning: lightningFilter,
-            watering: wateringFilter,
-            priceRange: priceRangeFilter,
-            locations: locationFilters,
-        })
-    }, filterDelay)
+export function SearchFilter() {
 
-    useEffect(() => {
+    const navigate = useNavigate()
 
-        filterData()
-    }, [nameFilter, locationFilters, difficultyFilter, lightningFilter, wateringFilter, priceRangeFilter])
-
-    useEffect(() => {
-        const unsubscribe = eventBusService.on("nameChange", nameChangeFilterEvent)
-        return unsubscribe
-    }, [])
-
-    const dispatch = useDispatch()
-    const location = useLocation()
-
-    useEffect(() => {
-        const query = queryString.parse(window.location.search)
-        const name = new URLSearchParams(location.search).get("name")
-        if (query) {
-            const filterParams = query
-            console.log(name)
-            if (name) {
-                setNameFilter(decodeURIComponent(name))
-            }
-            if (filterParams.difficulty) {
-                setDifficultyFilter(JSON.parse(decodeURIComponent(filterParams.difficulty)))
-            }
-            if (filterParams.lightning) {
-                setLightningFilter(JSON.parse(decodeURIComponent(filterParams.lightning)))
-            }
-            if (filterParams.watering) {
-                setWateringFilter(JSON.parse(decodeURIComponent(filterParams.watering)))
-            }
-            if (filterParams.priceRange) {
-                setPriceRangeFilter(JSON.parse(decodeURIComponent(filterParams.priceRange)))
-            }
-            if (filterParams.locations) {
-                setLocationFilters(JSON.parse(decodeURIComponent(filterParams.locations)))
-            }
-        }
-    }, [dispatch])
-
-    const nameChangeFilterEvent = ({ name }) => {
-        setNameFilter(name)
-    }
-
-    function handleLocationFilterChange(event) {
-        const { name, checked } = event.target
-        setLocationFilters({ ...locationFilters, [name]: checked })
-    }
-
-    function handleDifficultyFilterChange(event) {
-        setDifficultyFilter(event.target.value)
-    }
-
-    function handleLightningFilterChange(event) {
-        setLightningFilter(event.target.value)
-    }
-
-    function handleWateringFilterChange(event) {
-        setWateringFilter(event.target.value)
-    }
-
-    const handleRangeChange = (values) => {
-        setPriceRangeFilter({
-            min: values[0],
-            max: values[1]
-        })
-    }
-
-    const handleMinPriceChange = (e) => {
-        const newMinPrice = parseInt(e.target.value)
-        setPriceRangeFilter(prevState => {
-            const max = Math.max(newMinPrice, prevState.max)
-            return {
-                ...prevState,
-                min: newMinPrice,
-            }
-        })
-    }
-
-    const handleMaxPriceChange = (e) => {
-        const newMaxPrice = parseInt(e.target.value)
-        setPriceRangeFilter(prevState => {
-            return {
-                ...prevState,
-                max: newMaxPrice,
-            }
-        })
-    }
-
-    function handleResetFilters() {
-        setNameFilter(null)
-        setLocationFilters({
+    const [filters, setFilters] = useState({
+        name: null,
+        location: {
             Home: false,
             Office: false,
             Balcony: false,
             Yard: false,
+        },
+        difficulty: null,
+        lightning: null,
+        watering: null,
+        priceRange: {
+            min: 0,
+            max: 1000,
+        },
+    })
+
+    // create useEffect that will run on every change of the filters state
+    // it will check if the filters have changed and if so, it will set the url query params with the new filters
+    useEffect(() => {
+        console.log('filters changed', filters)
+        const queryParams = new URLSearchParams()
+        for (const key in filters) {
+            console.log('key', key)
+            if (key === 'location') {
+                for (const locationKey in filters.location) {
+                    if (filters.location[locationKey]) {
+                        queryParams.set(`location.${locationKey}`, filters.location[locationKey])
+                    }
+                }
+            } else if (key === 'priceRange') {
+                console.log('priceRange', filters.priceRange)
+                queryParams.set(`priceRange.min`, filters.priceRange.min)
+                queryParams.set(`priceRange.max`, filters.priceRange.max)
+            } else {
+                if (filters[key]) {
+                    console.log('key2', key)
+                    queryParams.set(key, filters[key])
+                }
+            }
+        }
+        const searchParams = queryParams.toString()
+        const url = searchParams ? `/shop?${searchParams}` : '/shop'
+        console.log('url', url)
+        console.log('searchParams', searchParams)
+        console.log(searchParams ? `/shop?${searchParams}` : '/shop')
+        navigate(`/shop?${searchParams}`);
+    }, [filters])
+
+    function handleFilterChange(event, rangeType) {
+        const { name, type, value, checked } = event.target;
+        if (type === 'checkbox') {
+            setFilters((prevFilters) => ({
+                ...prevFilters,
+                location: {
+                    ...prevFilters.location,
+                    [name]: checked,
+                },
+            }))
+        } else if (type === 'radio') {
+            setFilters((prevFilters) => ({
+                ...prevFilters,
+                [name]: value,
+            }))
+        } else if (type === 'number') {
+            const { value } = event.target;
+            if (rangeType === 'priceRange.min') {
+                setFilters((prevFilters) => ({
+                    ...prevFilters,
+                    priceRange: {
+                        ...prevFilters.priceRange,
+                        min: Math.min(value, prevFilters.priceRange.max),
+                    },
+                }));
+            } else if (rangeType === 'priceRange.max') {
+                setFilters((prevFilters) => ({
+                    ...prevFilters,
+                    priceRange: {
+                        ...prevFilters.priceRange,
+                        max: Math.max(value, prevFilters.priceRange.min),
+                    },
+                }));
+            }
+        }
+    }
+
+    function handleResetFilters() {
+        setFilters({
+            name: null,
+            location: {
+                Home: false,
+                Office: false,
+                Balcony: false,
+                Yard: false,
+            },
+            difficulty: null,
+            lightning: null,
+            watering: null,
+            priceRange: {
+                min: 0,
+                max: 1000,
+            },
         })
-        setDifficultyFilter(null)
-        setLightningFilter(null)
-        setWateringFilter(null)
-        setPriceRangeFilter({ min: 0, max: 1000 })
     }
 
     return (
@@ -144,9 +124,8 @@ export function SearchFilter(props) {
                 <input
                     type='checkbox'
                     name='Home'
-                    checked={locationFilters.Home}
-                    value={locationFilters.Home !== null ? locationFilters.Home : ''}
-                    onChange={handleLocationFilterChange}
+                    checked={filters.location.Home}
+                    onChange={handleFilterChange}
                 />
                 Home
             </label>
@@ -154,27 +133,24 @@ export function SearchFilter(props) {
                 <input
                     type='checkbox'
                     name='Office'
-                    checked={locationFilters.Office}
-                    value={locationFilters.Office !== null ? locationFilters.Office : ''}
-                    onChange={handleLocationFilterChange}
+                    checked={filters.location.Office}
+                    onChange={handleFilterChange}
                 />
                 Office
             </label>
             <label>
                 <input type="checkbox"
                     name="Balcony"
-                    checked={locationFilters.Balcony}
-                    value={locationFilters.Balcony !== null ? locationFilters.Balcony : ''}
-                    onChange={handleLocationFilterChange}
+                    checked={filters.location.Balcony}
+                    onChange={handleFilterChange}
                 />
                 Balcony
             </label>
             <label>
                 <input type="checkbox"
                     name="Yard"
-                    checked={locationFilters.Yard}
-                    value={locationFilters.Yard !== null ? locationFilters.Yard : ''}
-                    onChange={handleLocationFilterChange}
+                    checked={filters.location.Yard}
+                    onChange={handleFilterChange}
                 />
                 Yard
             </label>
@@ -185,8 +161,8 @@ export function SearchFilter(props) {
                     type="radio"
                     name="difficulty"
                     value="Survivor"
-                    checked={difficultyFilter === "Survivor"}
-                    onChange={handleDifficultyFilterChange}
+                    checked={filters.difficulty === "Survivor"}
+                    onChange={handleFilterChange}
                 />
                 Survivor
             </label>
@@ -195,8 +171,8 @@ export function SearchFilter(props) {
                     type="radio"
                     name="difficulty"
                     value="Amateur"
-                    checked={difficultyFilter === "Amateur"}
-                    onChange={handleDifficultyFilterChange}
+                    checked={filters.difficulty === "Amateur"}
+                    onChange={handleFilterChange}
                 />
                 Amateur
             </label>
@@ -205,8 +181,8 @@ export function SearchFilter(props) {
                     type="radio"
                     name="difficulty"
                     value="Pro"
-                    checked={difficultyFilter === "Pro"}
-                    onChange={handleDifficultyFilterChange}
+                    checked={filters.difficulty === "Pro"}
+                    onChange={handleFilterChange}
                 />
                 Pro
             </label>
@@ -217,8 +193,8 @@ export function SearchFilter(props) {
                     type="radio"
                     name="lightning"
                     value="Low"
-                    checked={lightningFilter === "Low"}
-                    onChange={handleLightningFilterChange}
+                    checked={filters.lightning === "Low"}
+                    onChange={handleFilterChange}
                 />
                 Low
             </label>
@@ -227,8 +203,8 @@ export function SearchFilter(props) {
                     type="radio"
                     name="lightning"
                     value="Medium"
-                    checked={lightningFilter === "Medium"}
-                    onChange={handleLightningFilterChange}
+                    checked={filters.lightning === "Medium"}
+                    onChange={handleFilterChange}
                 />
                 Medium
             </label>
@@ -237,8 +213,8 @@ export function SearchFilter(props) {
                     type="radio"
                     name="lightning"
                     value="High"
-                    checked={lightningFilter === "High"}
-                    onChange={handleLightningFilterChange}
+                    checked={filters.lightning === "High"}
+                    onChange={handleFilterChange}
                 />
                 High
             </label>
@@ -249,24 +225,24 @@ export function SearchFilter(props) {
                     type="radio"
                     name="watering"
                     value="Low"
-                    checked={wateringFilter === "Low"}
-                    onChange={handleWateringFilterChange} />
+                    checked={filters.watering === "Low"}
+                    onChange={handleFilterChange} />
                 Low
             </label>
             <label>
                 <input type="radio"
                     name="watering"
                     value="Medium"
-                    checked={wateringFilter === "Medium"}
-                    onChange={handleWateringFilterChange} />
+                    checked={filters.watering === "Medium"}
+                    onChange={handleFilterChange} />
                 Medium
             </label>
             <label>
                 <input type="radio"
                     name="watering"
                     value="High"
-                    checked={wateringFilter === "High"}
-                    onChange={handleWateringFilterChange} />
+                    checked={filters.watering === "High"}
+                    onChange={handleFilterChange} />
                 High
             </label>
 
@@ -277,24 +253,24 @@ export function SearchFilter(props) {
                         type="number"
                         min="0"
                         max="1000"
-                        value={priceRangeFilter.min}
-                        onChange={handleMinPriceChange}
+                        value={filters.priceRange.min}
+                        onChange={(e) => handleFilterChange(e, 'priceRange.min')} // Pass the field name
                     />
                     <div className='separator'>-</div>
                     <input
                         type="number"
                         min="0"
                         max="1000"
-                        value={priceRangeFilter.max}
-                        onChange={handleMaxPriceChange}
+                        value={filters.priceRange.max}
+                        onChange={(e) => handleFilterChange(e, 'priceRange.max')} // Pass the field name
                     />
                 </div>
-                <div className='slider-container'>
+                {/* <div className='slider-container'>
                     <ReactSlider
                         className="horizontal-slider"
                         thumbClassName="slider-thumb"
                         trackClassName="slider-track"
-                        value={[priceRangeFilter.min, priceRangeFilter.max]}
+                        value={[filters.priceRange.min, filters.priceRange.max]}
                         ariaLabelledby={['first-slider-label', 'second-slider-label']}
                         renderTrack={(props, state) => (
                             <div
@@ -302,13 +278,13 @@ export function SearchFilter(props) {
                                 className={`slider-track ${state.index === 1 ? "track-before" : "track-after"}`}
                             />
                         )}
-                        onChange={handleRangeChange}
+                        onChange={handleFilterChange}
                         minDistance={50}
                         min={0}
                         max={1000}
                         pearling={true}
                     />
-                </div>
+                </div> */}
             </div>
             <button type="reset" onClick={handleResetFilters}>Reset</button>
         </section>

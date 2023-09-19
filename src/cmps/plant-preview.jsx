@@ -27,12 +27,12 @@ export function PlantPreview({ plant }) {
 
   return (
     <>
-      <Link to={`/plant/${plant._id}`} className="plants-list" >
+      <Link to={`/shop/${plant._id}`} className="plants-list" >
         <img src={plant.pic} alt={plant._id} />
         <h2>{plant.name}</h2>
         <p>{plant.price}</p>
         <div className="plant-controls">
-          <span to={`/plant/edit/${plant._id}`} className="on-img-btn edit">📝</span>
+          <span to={`/shop/plant/edit/${plant._id}`} className="on-img-btn edit">📝</span>
           <span className="on-img-btn delete" onClick={(event) => onRemovePlant(event)}><img src={trashBin} /></span>
         </div>
       </Link>

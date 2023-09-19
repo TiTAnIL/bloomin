@@ -25,11 +25,14 @@ export function getActionUpdatePlant(plant) {
   }
 }
 
-export function loadPlants() {
+export function loadPlants(filterBy = null) {
+  console.log(
+    'plant.actions.js: loadPlants(filterBy)', filterBy
+  )
   return async (dispatch, getState) => {
-    const { filterBy } = getState().plantModule
+    // const { filterBy } = getState().plantModule
     const plants = await plantService.query(filterBy)
-    dispatch({ type: 'SET_PLANTS', plants })     
+    dispatch({ type: 'SET_PLANTS', plants })
     dispatch({ type: 'SET_LOADING', isLoading: false })
   }
 }

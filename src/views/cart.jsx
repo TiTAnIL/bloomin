@@ -42,9 +42,7 @@ export function Cart() {
         dispatch(removeItem(id))
     }, [dispatch, id])
 
-
-
-
+    
     if (!items) return <LoadingScreen
         loading={true}
         bgColor="rgba(255,255,255,0.5)"

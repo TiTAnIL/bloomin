@@ -12,6 +12,7 @@
 
 .shop-container {
     display: flex;
+    flex: 1; /* Use flex: 1 to take up remaining vertical space */
 }
 
 .pagination {
@@ -73,6 +74,8 @@
 }
 
 .filter-display {
+    min-width: 300px; /* Adjust the width as needed */
+    overflow-y: auto; /* Add vertical scrollbar when content overflows */
     margin: 0;
     height: 10%;
     position: sticky;
