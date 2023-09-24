@@ -7,12 +7,11 @@
     flex-direction: column;
     flex-wrap: wrap;
     flex: 2;
-
 }
 
 .shop-container {
     display: flex;
-    flex: 1; /* Use flex: 1 to take up remaining vertical space */
+    flex: 1;
 }
 
 .pagination {
@@ -59,7 +58,6 @@
     flex-direction: column;
 }
 
-
 .sidenav-openbtn,
 .mid-fiter {
     display: none;
@@ -93,8 +91,6 @@
         align-content: flex-start;
     }
 }
-
-
 
 .mid-fiter {
     margin-left: 0;

@@ -1,86 +1,52 @@
+
 @use '../setup/mixins' as mix;
 @use '../setup/variables' as v;
 
-
-.main-shop-layout {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    flex: 2;
-}
-
-.shop-container {
-    display: flex;
-}
-
-.pagination {
-    margin-top: mix.rem(64px);
-    margin-right: mix.rem(20px);
-    display: flex;
-    flex-direction: row;
-    font-size: mix.rem(17px);
-    gap: 20px;
-
-    & li {
-        display: flex;
-        justify-content: center;
-        margin: 0;
-        font-size: 20px;
-        display: flex;
-        border: 1px #3948318d solid;
-        padding: 0px mix.rem(14px) 0px mix.rem(14px);
-        cursor: pointer;
-    }
-
-    & .cur-page {
-        color: v.$clr3;
-        background-color: v.$clr1;
-    }
-
-    & .page-nums {
-        display: flex;
-
-        & :active {
-            background-color: v.$clr2;
-            border: 1px v.$clr2 solid;
-        }
-
-    }
-
-    @include mix.respond-to(low) {
-        flex-direction: column;
-    }
-}
-
-.page-controls {
-    display: flex;
-    flex-direction: column;
-}
-
-
-.buttons-wraper {
-    display: flex;
-
-    & * {
-        margin: 0;
-    }
-}
-
-.filter-display {
+.filter-container {
     margin: 0;
     position: sticky;
     top: 0;
-    background-color: v.$clr5;
+    background-color: #f2f2f2;
+    padding: 20px;
     display: block;
 
-    @include mix.respond-to(medium) {
-        display: none;
+    select {
+        width: 100%;
+        padding: 5px;
+        margin-top: 5px;
     }
 
-    .buttons-wraper {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        align-content: flex-start;
+    label {
+        display: block;
+        margin-top: 5px;
+
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .price-input {
+            display: flex;
+            align-items: center;
+
+            input[type="number"] {
+                flex: 1;
+                padding: 5px;
+            }
+
+            .separator {
+                margin: 0 5px;
+            }
+        }
+    }
+
+    button[type="reset"] {
+        margin-top: mix.rem(10px);
+        // background-color: v.$clr5;
+        // color: white;
+        border: none;
+        padding: mix.rem(10px) mix.rem(20px);
+        cursor: pointer;
     }
 }
+
+
