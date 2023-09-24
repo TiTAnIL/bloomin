@@ -44,7 +44,8 @@ const routes = [
     },
     {
         path: '/shop/edit/',
-        component: <Edit />
+        component: <Edit />,
+        exact: true
     },
 ]
 

@@ -62,7 +62,6 @@ import { getActionAddPlant, getActionRemovePlant, getActionUpdatePlant } from ".
 //   return plants
 // }
 
-
 // async function save(plant) {
 //   var savedPlant
 //   if (plant._id) {
@@ -115,23 +114,25 @@ async function query(filterBy) {
     // Use the httpService to fetch data from the server
     console.log('calling plant query frontend', filterBy)
     if (filterBy === null) {
-      return await httpService.get(`api/plants/getPlants`);
+      console.log('filterBy is null')
+      return await httpService.get(`api/plants`)
     } else {
+      console.log('filterBy is not null')
       const queryString = Object.keys(filterBy)
         .map((key) => `${key}=${encodeURIComponent(filterBy[key])}`)
-        .join('&');
-      return await httpService.get(`api/plants/getPlants${queryString}`)
+        .join('&')
+      return await httpService.get(`api/plants${queryString}`)
     }
   } catch (error) {
     console.error('Error querying plants:', error)
-    throw error;
+    throw error
   }
 }
 
 async function save(plant) {
+  console.log('calling plant save frontend', plant)
   try {
     let savedPlant
-
     if (plant._id) {
       savedPlant = await httpService.put(`api/plants/${plant._id}`, plant)
     } else {

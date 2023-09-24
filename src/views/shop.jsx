@@ -7,7 +7,7 @@ import { PlantList } from '../cmps/plants-list'
 import { SearchFilter } from '../cmps/search-filter'
 import LoadingScreen from "react-loading-screen"
 
-export function Shop(props) {
+export function Shop() {
 
     const { plants, isLoading } = useSelector(state => state.plantModule)
     const [currentPage, setCurrentPage] = useState(1)
@@ -15,43 +15,70 @@ export function Shop(props) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const location = useLocation()
-    const [isFiltersOpen, setIsFiltersOpen] = useState(false)
-    const filtersRef = useRef(null)
+    const [isFiltersOpen, setIsFiltersOpen] = useState(true)
+    // const filtersRef = useRef(null)
     const barRef = useRef(null)
     const [isFirstLoad, setIsFirstLoad] = useState(true)
     const [filters, setFilters] = useState({
-        name: '',
-        difficulty: '',
-        lightning: '',
-        watering: '',
-        priceRange: '',
-        locations: '',
+        Home: false,
+        Office: false,
+        Balcony: false,
+        Yard: false,
+        difficulty: false,
+        lightning: false,
+        watering: false,
+        priceRange: {
+            min: 0,
+            max: 1000,
+        },
     })
+
+    const onChangeFilter = (newFilters) => {
+        setFilters(newFilters)
+    }
+
+    useEffect(() => {
+        dispatch(setFilterBy(filters))
+        const queryParams = generateFilterQuery(filters);
+        const queryString = new URLSearchParams(queryParams).toString();
+        navigate(`/shop${queryString ? '?' + queryString : ''}`);
+    }, [filters])
+
+    useEffect(() => {
+        console.log('shop useEffect')
+        if (isFirstLoad) {
+            console.log('shop useEffect - first load')
+            setIsFirstLoad(false)
+            return
+        }
+        console.log('shop useEffect - not first load')
+    }, [filters])
 
     useEffect(() => {
         console.log('plants useEffect')
         if (!plants || !plants.length) dispatch(loadPlants())
-    }, []);
+    }, [plants]);
 
-    const onChangeFilter = (filterBy) => {
-        console.log('is first load', isFirstLoad)
-        if (isFirstLoad) {
-            console.log('first load')
-            setIsFirstLoad(false)
-            return
-        }
-        console.log('filters changed', filters)
-        const queryParams = new URLSearchParams(location.search)
+    function generateFilterQuery(filters) {
+        const queryParams = {};
         for (const key in filters) {
-            if (filters[key]) {
-                queryParams.set(key, filters[key])
-            } else {
-                queryParams.delete(key)
+            if (key === 'priceRange') {
+                if (
+                    filters.priceRange.min !== 0 ||
+                    filters.priceRange.max !== 1000
+                ) {
+                    queryParams['priceRange.min'] = filters.priceRange.min;
+                    queryParams['priceRange.max'] = filters.priceRange.max;
+                }
+            } else if (
+                filters[key] !== null &&
+                filters[key] !== false &&
+                filters[key] !== "false"
+            ) {
+                queryParams[key] = filters[key];
             }
         }
-        console.log('query params', queryParams.toString())
-        // navigate('/shop?' + queryParams.toString())
-        setFilters(filterBy)
+        return queryParams;
     }
 
     const idxLastPlant = currentPage * plantsPerPage
@@ -88,26 +115,15 @@ export function Shop(props) {
         setPlantsPerPage(event.target.value)
         setCurrentPage(1)
     }
-
-    // const handleFilters = () => {
-    //     setIsFiltersOpen(true)
-    // }
-
     const openFilters = () => {
         setIsFiltersOpen(true)
     }
 
-
-    // const closeFilters = () => {
-    //     setIsFiltersOpen(false)
-    // }
-
-
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (barRef.current && !barRef.current.contains(event.target)
-                &&
-                !event.target.classList.contains('sidenav-openbtn')) {
+                && window.innerWidth <= 750 //
+                && !event.target.classList.contains('sidenav-openbtn')) {
                 setIsFiltersOpen(false);
             }
         }
@@ -118,7 +134,6 @@ export function Shop(props) {
             document.removeEventListener('click', handleClickOutside);
         }
     }, [])
-
 
     const handleResize = () => {
         if (window.innerWidth > 750) {
@@ -156,13 +171,13 @@ export function Shop(props) {
             </div>
             <div className='buttons-wraper'>
                 <button className="sidenav-openbtn" onClick={() => openFilters()}>Filters</button>
-                <Link to='/shop/plant/edit/'>
+                <Link to='/shop/edit/'>
                     <button>Add Plant</button>
                 </Link>
             </div>
             <div className='shop-container'>
                 <div className='filter-display' style={{ display: isFiltersOpen ? 'block' : 'none' }} ref={barRef}>
-                    <SearchFilter onChangeFilter={onChangeFilter} ref={filtersRef} />
+                    <SearchFilter onChangeFilter={onChangeFilter} />
                 </div>
                 <PlantList plants={currentPlants} />
             </div>

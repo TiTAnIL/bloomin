@@ -1,4 +1,3 @@
-
 @use '../setup/mixins' as mix;
 @use '../setup/variables' as v;
 
@@ -24,18 +23,21 @@
             margin-right: 5px;
         }
 
-        .price-input {
-            display: flex;
-            align-items: center;
+    }
 
-            input[type="number"] {
-                flex: 1;
-                padding: 5px;
-            }
+    .price-input {
+        display: flex;
+        align-items: center;
+        margin: 1px;
 
-            .separator {
-                margin: 0 5px;
-            }
+        input[type="number"] {
+            flex: 1;
+            padding: 5px;
+            max-width: mix.rem(122px);
+        }
+
+        .separator {
+            margin: 0 5px;
         }
     }
 
@@ -48,5 +50,3 @@
         cursor: pointer;
     }
 }
-
-

@@ -38,12 +38,14 @@ export function loadPlants(filterBy = null) {
 }
 
 export function setFilterBy(filterBy) {
+  console.log('plant.actions.js: setFilterBy(filterBy)', filterBy)
   return (dispatch) => {
     dispatch({ type: 'SET_FILTER_BY', filterBy })
   }
 }
 
 export function removePlant(plantId) {
+  console.log('plant.actions.js: removePlant(plantId)', plantId)
   return async (dispatch) => {
     try {
       await plantService.remove(plantId)
@@ -58,6 +60,7 @@ export function removePlant(plantId) {
 }
 
 export function addPlant(plant) {
+  console.log('plant.actions.js: addPlant(plant)', plant)
   return async (dispatch) => {
     try {
       const savedPlant = await plantService.save(plant)
@@ -72,6 +75,7 @@ export function addPlant(plant) {
 }
 
 export function updatePlant(plant) {
+  console.log('plant.actions.js: updatePlant(plant)', plant)
   return async (dispatch) => {
     try {
       const savedPlant = await plantService.save(plant)
@@ -84,4 +88,3 @@ export function updatePlant(plant) {
     }
   }
 }
-

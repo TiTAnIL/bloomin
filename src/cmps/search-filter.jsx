@@ -1,22 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import queryString from 'query-string';
 
-export function SearchFilter() {
+export function SearchFilter({ onChangeFilter }) {
     const navigate = useNavigate();
 
     const [filters, setFilters] = useState({
-        checkboxes: {
-            Home: false,
-            Office: false,
-            Balcony: false,
-            Yard: false,
-        },
-        selects: {
-            difficulty: null,
-            lightning: null,
-            watering: null,
-        },
+        Home: false,
+        Office: false,
+        Balcony: false,
+        Yard: false,
+        difficulty: false,
+        lightning: false,
+        watering: false,
         priceRange: {
             min: 0,
             max: 1000,
@@ -24,48 +19,14 @@ export function SearchFilter() {
     });
 
     useEffect(() => {
-        const queryParams = {};
+        onChangeFilter(filters);
+    }, [filters, onChangeFilter]);
 
-        for (const key in filters.checkboxes) {
-            if (filters.checkboxes[key]) {
-                queryParams[`location.${key}`] = true;
-            }
-        }
-
-        for (const key in filters.selects) {
-            if (filters.selects[key]) {
-                queryParams[key] = filters.selects[key];
-            }
-        }
-
-        queryParams['priceRange.min'] = filters.priceRange.min;
-        queryParams['priceRange.max'] = filters.priceRange.max;
-
-        const search = queryString.stringify(queryParams);
-        const url = search ? `/shop?${search}` : '/shop';
-
-        navigate(url);
-    }, [filters, navigate]);
-
-    function handleCheckboxChange(event) {
-        const { name, checked } = event.target;
+    function handleInputChange(event) {
+        const { name, value, type, checked } = event.target;
         setFilters((prevFilters) => ({
             ...prevFilters,
-            checkboxes: {
-                ...prevFilters.checkboxes,
-                [name]: checked,
-            },
-        }));
-    }
-
-    function handleSelectChange(event) {
-        const { name, value } = event.target;
-        setFilters((prevFilters) => ({
-            ...prevFilters,
-            selects: {
-                ...prevFilters.selects,
-                [name]: value,
-            },
+            [name]: type === 'checkbox' ? checked : value,
         }));
     }
 
@@ -82,17 +43,13 @@ export function SearchFilter() {
 
     function handleResetFilters() {
         setFilters({
-            checkboxes: {
-                Home: false,
-                Office: false,
-                Balcony: false,
-                Yard: false,
-            },
-            selects: {
-                difficulty: null,
-                lightning: null,
-                watering: null,
-            },
+            Home: false,
+            Office: false,
+            Balcony: false,
+            Yard: false,
+            difficulty: false,
+            lightning: false,
+            watering: false,
             priceRange: {
                 min: 0,
                 max: 1000,
@@ -107,8 +64,8 @@ export function SearchFilter() {
                 <input
                     type='checkbox'
                     name='Home'
-                    checked={filters.checkboxes.Home}
-                    onChange={handleCheckboxChange}
+                    checked={filters.Home}
+                    onChange={handleInputChange}
                 />
                 Home
             </label>
@@ -116,8 +73,8 @@ export function SearchFilter() {
                 <input
                     type='checkbox'
                     name='Office'
-                    checked={filters.checkboxes.Office}
-                    onChange={handleCheckboxChange}
+                    checked={filters.Office}
+                    onChange={handleInputChange}
                 />
                 Office
             </label>
@@ -125,8 +82,8 @@ export function SearchFilter() {
                 <input
                     type="checkbox"
                     name="Balcony"
-                    checked={filters.checkboxes.Balcony}
-                    onChange={handleCheckboxChange}
+                    checked={filters.Balcony}
+                    onChange={handleInputChange}
                 />
                 Balcony
             </label>
@@ -134,8 +91,8 @@ export function SearchFilter() {
                 <input
                     type="checkbox"
                     name="Yard"
-                    checked={filters.checkboxes.Yard}
-                    onChange={handleCheckboxChange}
+                    checked={filters.Yard}
+                    onChange={handleInputChange}
                 />
                 Yard
             </label>
@@ -143,10 +100,10 @@ export function SearchFilter() {
             <h2>Difficulty</h2>
             <select
                 name="difficulty"
-                value={filters.selects.difficulty}
-                onChange={handleSelectChange}
+                value={filters.difficulty}
+                onChange={handleInputChange}
             >
-                <option value="">Select Difficulty</option>
+                <option value={false}>Select Difficulty</option>
                 <option value="Survivor">Survivor</option>
                 <option value="Amateur">Amateur</option>
                 <option value="Pro">Pro</option>
@@ -155,10 +112,10 @@ export function SearchFilter() {
             <h2>Lightning</h2>
             <select
                 name="lightning"
-                value={filters.selects.lightning}
-                onChange={handleSelectChange}
+                value={filters.lightning}
+                onChange={handleInputChange}
             >
-                <option value="">Select Lightning</option>
+                <option value={false}>Select Lightning</option>
                 <option value="Low">Low</option>
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>
@@ -167,10 +124,10 @@ export function SearchFilter() {
             <h2>Watering</h2>
             <select
                 name="watering"
-                value={filters.selects.watering}
-                onChange={handleSelectChange}
+                value={filters.watering}
+                onChange={handleInputChange}
             >
-                <option value="">Select Watering</option>
+                <option value={false}>Select Watering</option>
                 <option value="Low">Low</option>
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>

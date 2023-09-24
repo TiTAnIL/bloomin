@@ -7,7 +7,7 @@ import { addPlant, updatePlant } from '../store/actions/plant.actions.js'
 import { useDispatch } from 'react-redux';
 import { utilService } from '../services/util.service';
 
-export function Edit(props) {
+export function Edit() {
 
     const params = useParams()
     const navigate = useNavigate()
