@@ -1,25 +1,23 @@
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { loadPlants, setFilterBy } from '../store/actions/plant.actions.js'
-
 import { PlantList } from '../cmps/plants-list'
 import { SearchFilter } from '../cmps/search-filter'
 import LoadingScreen from "react-loading-screen"
 
 export function Shop() {
 
-    const { plants, isLoading } = useSelector(state => state.plantModule)
+    const { plants, isLoading, filterBy } = useSelector(state => state.plantModule)
     const [currentPage, setCurrentPage] = useState(1)
     const [plantsPerPage, setPlantsPerPage] = useState(9)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const location = useLocation()
     const [isFiltersOpen, setIsFiltersOpen] = useState(true)
-    // const filtersRef = useRef(null)
     const barRef = useRef(null)
-    const [isFirstLoad, setIsFirstLoad] = useState(true)
     const [filters, setFilters] = useState({
+        name: false,
         Home: false,
         Office: false,
         Balcony: false,
@@ -33,53 +31,51 @@ export function Shop() {
         },
     })
 
-    const onChangeFilter = (newFilters) => {
-        setFilters(newFilters)
-    }
+    useEffect(() => {
+        console.log('useEffect filterBy from shop', filterBy)
+        const queryParams = generateFilterQuery(filterBy)
+        const queryString = new URLSearchParams(queryParams).toString()
+        navigate(`/shop${queryString ? '?' + queryString : ''}`)
+    }, [filterBy])
 
     useEffect(() => {
-        dispatch(setFilterBy(filters))
-        const queryParams = generateFilterQuery(filters);
-        const queryString = new URLSearchParams(queryParams).toString();
-        navigate(`/shop${queryString ? '?' + queryString : ''}`);
-    }, [filters])
-
-    useEffect(() => {
-        console.log('shop useEffect')
-        if (isFirstLoad) {
-            console.log('shop useEffect - first load')
-            setIsFirstLoad(false)
-            return
-        }
-        console.log('shop useEffect - not first load')
-    }, [filters])
-
-    useEffect(() => {
-        console.log('plants useEffect')
         if (!plants || !plants.length) dispatch(loadPlants())
     }, [plants]);
 
-    function generateFilterQuery(filters) {
+    function onSearchFilters(filters) {
+        setFilters(filters)
+    }
+
+    function generateFilterQuery(filteredBy) {
         const queryParams = {};
-        for (const key in filters) {
+        for (const key in filteredBy) {
             if (key === 'priceRange') {
                 if (
-                    filters.priceRange.min !== 0 ||
-                    filters.priceRange.max !== 1000
+                    filteredBy.priceRange.min !== 0 ||
+                    filteredBy.priceRange.max !== 1000
                 ) {
-                    queryParams['priceRange.min'] = filters.priceRange.min;
-                    queryParams['priceRange.max'] = filters.priceRange.max;
+                    queryParams['priceRange.min'] = filteredBy.priceRange.min;
+                    queryParams['priceRange.max'] = filteredBy.priceRange.max;
                 }
             } else if (
-                filters[key] !== null &&
-                filters[key] !== false &&
-                filters[key] !== "false"
+                filteredBy[key] !== null &&
+                filteredBy[key] !== false &&
+                filteredBy[key] !== "false"
             ) {
-                queryParams[key] = filters[key];
+                queryParams[key] = filteredBy[key];
             }
         }
         return queryParams;
     }
+
+    // useEffect(() => {
+    //     const searchParams = new URLSearchParams(location.search);
+    //     const parsedFilters = {}
+    //     for (const [key, value] of searchParams.entries()) {
+    //         parsedFilters[key] = value === 'true' || value === 'false' ? value === 'true' : value;
+    //     }
+    //     setFilters(parsedFilters)
+    // }, [location.search, dispatch])
 
     const idxLastPlant = currentPage * plantsPerPage
     const idxFirstPlant = idxLastPlant - plantsPerPage
@@ -122,7 +118,7 @@ export function Shop() {
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (barRef.current && !barRef.current.contains(event.target)
-                && window.innerWidth <= 750 //
+                && window.innerWidth <= 750
                 && !event.target.classList.contains('sidenav-openbtn')) {
                 setIsFiltersOpen(false);
             }
@@ -177,7 +173,7 @@ export function Shop() {
             </div>
             <div className='shop-container'>
                 <div className='filter-display' style={{ display: isFiltersOpen ? 'block' : 'none' }} ref={barRef}>
-                    <SearchFilter onChangeFilter={onChangeFilter} />
+                    <SearchFilter onSearchFilters={onSearchFilters} />
                 </div>
                 <PlantList plants={currentPlants} />
             </div>

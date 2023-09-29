@@ -1,10 +1,22 @@
 
 const INITIAL_STATE = {
     plants: [],
-    filterBy: {},
+    filterBy: {
+        name: false,
+        Home: false,
+        Office: false,
+        Balcony: false,
+        Yard: false,
+        difficulty: false,
+        lightning: false,
+        watering: false,
+        priceRange: {
+            min: 0,
+            max: 1000,
+        }
+    },
     isLoading: true
 }
-
 
 export function plantReducer(state = INITIAL_STATE, action) {
 
@@ -37,6 +49,11 @@ export function plantReducer(state = INITIAL_STATE, action) {
             return {
                 ...state,
                 filterBy: { ...action.filterBy }
+            }
+        case 'RESET_FILTERS':
+            return {
+                ...state,
+                filterBy: { ...INITIAL_STATE.filterBy },
             }
         case 'SET_LOADING':
             return {

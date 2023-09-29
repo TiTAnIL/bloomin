@@ -5,7 +5,6 @@ import { useDropzone } from 'react-dropzone';
 import { plantService } from '../services/plant.service.js';
 import { addPlant, updatePlant } from '../store/actions/plant.actions.js'
 import { useDispatch } from 'react-redux';
-import { utilService } from '../services/util.service';
 
 export function Edit() {
 
@@ -66,17 +65,6 @@ export function Edit() {
     }
 
     const handleSubmit = (event) => {
-        // event.preventDefault();
-        // const formData = new FormData();
-        // formData.append("name", plant.name)
-        // formData.append("diameter", plant.diameter)
-        // formData.append("height", plant.height)
-        // formData.append("price", plant.price)
-        // formData.append("difficulty", plant.difficulty)
-        // formData.append("about", plant.about)
-        // formData.append("primary", images.primary)
-        // formData.append("secondary", images.secondary)
-        // formData.append("tertiary", images.tertiary)
         if (plant._id) {
             dispatch(updatePlant(plant)).then(() => {
                 navigate('/shop')
@@ -87,7 +75,6 @@ export function Edit() {
             })
         }
     }
-
 
     return (
         <main className="page-container">

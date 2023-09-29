@@ -104,20 +104,17 @@ import { getActionAddPlant, getActionRemovePlant, getActionUpdatePlant } from ".
 //   }
 // }
 
-// refactor to http service.
 import { httpService } from './http.service';
 
 const STORAGE_KEY = 'plants';
 
 async function query(filterBy) {
+  console.log('calling plant query frontend', filterBy)
   try {
-    // Use the httpService to fetch data from the server
-    console.log('calling plant query frontend', filterBy)
     if (filterBy === null) {
-      console.log('filterBy is null')
       return await httpService.get(`api/plants`)
     } else {
-      console.log('filterBy is not null')
+      console.log('query filterBy', filterBy)
       const queryString = Object.keys(filterBy)
         .map((key) => `${key}=${encodeURIComponent(filterBy[key])}`)
         .join('&')

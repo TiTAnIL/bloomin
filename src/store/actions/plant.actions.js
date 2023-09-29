@@ -1,5 +1,6 @@
 import { plantService } from "../../services/plant.service"
 import { showSuccessMsg, showErrorMsg } from '../../services/event-bus.service.js'
+import { filter } from "lodash"
 
 
 export function getActionRemovePlant(plantId) {
@@ -25,21 +26,29 @@ export function getActionUpdatePlant(plant) {
   }
 }
 
+export function resetFilters() {
+  return {
+      type: 'RESET_FILTERS',
+  };
+}
+
 export function loadPlants(filterBy = null) {
-  console.log(
-    'plant.actions.js: loadPlants(filterBy)', filterBy
-  )
+  console.log('plant.actions.js: loadPlants(filterBy)', filterBy);
   return async (dispatch, getState) => {
-    // const { filterBy } = getState().plantModule
-    const plants = await plantService.query(filterBy)
-    dispatch({ type: 'SET_PLANTS', plants })
-    dispatch({ type: 'SET_LOADING', isLoading: false })
+    try {
+      const plants = await plantService.query(filterBy);
+      dispatch({ type: 'SET_PLANTS', plants });
+      dispatch({ type: 'SET_LOADING', isLoading: false });
+    } catch (error) {
+      console.error('Error loading plants:', error);
+    }
   }
 }
 
 export function setFilterBy(filterBy) {
   console.log('plant.actions.js: setFilterBy(filterBy)', filterBy)
   return (dispatch) => {
+    console.log('dispatch({ type: "SET_FILTER_BY", filterBy })', filterBy)
     dispatch({ type: 'SET_FILTER_BY', filterBy })
   }
 }

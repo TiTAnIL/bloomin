@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from 'react-router-dom';
+import { setFilterBy, resetFilters } from '../store/actions/plant.actions';
+import { useDispatch } from 'react-redux';
 
-export function SearchFilter({ onChangeFilter }) {
-    const navigate = useNavigate();
+export function SearchFilter() {
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const location = useLocation()
 
     const [filters, setFilters] = useState({
         Home: false,
@@ -12,15 +17,32 @@ export function SearchFilter({ onChangeFilter }) {
         difficulty: false,
         lightning: false,
         watering: false,
+        name: false,
         priceRange: {
             min: 0,
             max: 1000,
         },
-    });
+    })
 
-    useEffect(() => {
-        onChangeFilter(filters);
-    }, [filters, onChangeFilter]);
+    // const parseURLParameters = () => {
+    //     const searchParams = new URLSearchParams(location.search);
+    //     const parsedFilters = {};
+
+    //     for (const [key, value] of searchParams.entries()) {
+    //         parsedFilters[key] = value === 'true' || value === 'false' ? value === 'true' : value;
+    //     }
+
+    //     setFilters(parsedFilters);
+    // };
+
+    // useEffect(() => {
+    //     // Parse URL parameters when the component mounts and when location.search changes
+    //     parseURLParameters();
+    // }, [location.search]);
+
+    function onSubmitFilters() {
+        dispatch(setFilterBy(filters))
+    }
 
     function handleInputChange(event) {
         const { name, value, type, checked } = event.target;
@@ -38,7 +60,7 @@ export function SearchFilter({ onChangeFilter }) {
                 ...prevFilters.priceRange,
                 [rangeType]: parseInt(value, 10),
             },
-        }));
+        }))
     }
 
     function handleResetFilters() {
@@ -50,11 +72,14 @@ export function SearchFilter({ onChangeFilter }) {
             difficulty: false,
             lightning: false,
             watering: false,
+            name: false,
             priceRange: {
                 min: 0,
                 max: 1000,
-            },
-        });
+            }
+        })
+        dispatch(resetFilters())
+        navigate('/shop')
     }
 
     return (
@@ -154,6 +179,7 @@ export function SearchFilter({ onChangeFilter }) {
                 </div>
             </div>
             <button type="reset" onClick={handleResetFilters}>Reset</button>
+            <button type="search" onClick={onSubmitFilters}>Search</button>
         </section>
     );
 }

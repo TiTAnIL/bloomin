@@ -1,8 +1,7 @@
-import { NavLink, useNavigate } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
-import { loadPlants } from "../store/actions/plant.actions"
-import { eventBusService } from '../services/event-bus.service'
+import { setFilterBy } from "../store/actions/plant.actions"
 
 import logo from '../assets/imgs/logo.png'
 import searchIcon from '../assets/imgs/ic-actions-search.png'
@@ -17,11 +16,6 @@ export function AppHeader() {
     const [name, setName] = useState('')
     const [isNavOpen, setIsNavOpen] = useState(false)
     const [isSearch, setisSearch] = useState(false)
-    const navigate = useNavigate()
-
-    const onChangeFilter = () => {
-        dispatch(loadPlants())
-    }
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -41,11 +35,6 @@ export function AppHeader() {
         }
     }, [])
 
-    useEffect(() => {
-        onChangeFilter({
-            name: name
-        })
-    }, [name])
 
     function handleNameChange(event) {
         setName(event.target.value)
@@ -70,12 +59,9 @@ export function AppHeader() {
     }
 
     function handleSubmit(event) {
-        console.log(event)
         event.preventDefault()
         event.stopPropagation()
-        const filterBy = { name: name }
-        eventBusService.emit("nameChange", filterBy)
-        navigate(`/shop?name=${name}`)
+        dispatch(setFilterBy({ name: name }))
         closeSearch()
     }
 
@@ -110,10 +96,6 @@ export function AppHeader() {
                             <NavLink className="char-style-2" to='/match'>Mix&Match</NavLink>
                             <NavLink className="char-style-2" to='/contact'>Contact</NavLink>
                             <NavLink className="char-style-2" to='/about'>Info</NavLink>
-                            {/* <select className="lang-med">
-                                    <option className="lang-opt" value="english">🇺🇸 English</option>
-                                    <option value="hebrew">🇮🇱 עברית</option>
-                                </select> */}
                             <NavLink to='/'><img className="nav-Blogo" src={Blogo} alt="logo" /></NavLink>
                         </div>
                         <span className="sidenav-openbtn" onClick={() => openNav()}>&#9776;</span>
@@ -178,13 +160,6 @@ export function AppHeader() {
                             <li>
                                 <CartTotal />
                             </li>
-
-                            {/* <li>
-                                    <select className="lang background-color4">
-                                        <option value="english">🇺🇸 English</option>
-                                        <option value="hebrew">🇮🇱 עברית</option>
-                                    </select>
-                                </li> */}
                         </ul>
                     </div>
                 </nav>
