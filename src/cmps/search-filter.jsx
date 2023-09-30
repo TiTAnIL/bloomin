@@ -24,32 +24,57 @@ export function SearchFilter() {
         },
     })
 
-    // const parseURLParameters = () => {
-    //     const searchParams = new URLSearchParams(location.search);
-    //     const parsedFilters = {};
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search)
+        const parsedFilters = {}
+        const filterNames = [
+            'name',
+            'Home',
+            'Office',
+            'Balcony',
+            'Yard',
+            'difficulty',
+            'lightning',
+            'watering',
+            'priceRange'
+        ]
+    
+        filterNames.forEach(filterName => {
+            const value = queryParams.get(filterName)
+            if (filterName === 'priceRange') {
+                const min = parseInt(queryParams.get('priceRange.min'), 10)
+                const max = parseInt(queryParams.get('priceRange.max'), 10)
+                if (!isNaN(min) || !isNaN(max)) {
+                    parsedFilters[filterName] = {
+                        min: isNaN(min) ? 0 : min,
+                        max: isNaN(max) ? 1000 : max,
+                    }
+                } else {
+                    parsedFilters[filterName] = {
+                        min: 0,
+                        max: 1000,
+                    }
+                }
+            } else if (value !== null) {
+                parsedFilters[filterName] = value === 'true' || value === 'false' ? value === 'true' : value
+            } else {
+                parsedFilters[filterName] = false;
+            }
+        })
+        setFilters(parsedFilters)
+    }, [location.search, dispatch])
 
-    //     for (const [key, value] of searchParams.entries()) {
-    //         parsedFilters[key] = value === 'true' || value === 'false' ? value === 'true' : value;
-    //     }
-
-    //     setFilters(parsedFilters);
-    // };
-
-    // useEffect(() => {
-    //     // Parse URL parameters when the component mounts and when location.search changes
-    //     parseURLParameters();
-    // }, [location.search]);
 
     function onSubmitFilters() {
         dispatch(setFilterBy(filters))
     }
 
     function handleInputChange(event) {
-        const { name, value, type, checked } = event.target;
+        const { name, value, type, checked } = event.target
         setFilters((prevFilters) => ({
             ...prevFilters,
             [name]: type === 'checkbox' ? checked : value,
-        }));
+        }))
     }
 
     function handleRangeChange(event, rangeType) {

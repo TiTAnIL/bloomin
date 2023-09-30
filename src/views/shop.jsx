@@ -32,17 +32,66 @@ export function Shop() {
     })
 
     useEffect(() => {
-        console.log('useEffect filterBy from shop', filterBy)
+        console.log('useEffect location.search:')
+        const queryParams = new URLSearchParams(location.search)
+        const parsedFilters = {}
+        const filterNames = [
+            'name',
+            'Home',
+            'Office',
+            'Balcony',
+            'Yard',
+            'difficulty',
+            'lightning',
+            'watering',
+            'priceRange'
+        ]
+
+        filterNames.forEach(filterName => {
+            const value = queryParams.get(filterName)
+            if (filterName === 'priceRange') {
+                const min = parseInt(queryParams.get('priceRange.min'), 10)
+                const max = parseInt(queryParams.get('priceRange.max'), 10)
+
+                if (!isNaN(min) || !isNaN(max)) {
+                    parsedFilters[filterName] = {
+                        min: isNaN(min) ? 0 : min,
+                        max: isNaN(max) ? 1000 : max,
+                    };
+                } else {
+                    parsedFilters[filterName] = {
+                        min: 0,
+                        max: 1000,
+                    };
+                }
+            } else if (value !== null) {
+                parsedFilters[filterName] = value === 'true' || value === 'false' ? value === 'true' : value
+            } else {
+                parsedFilters[filterName] = false
+            }
+        });
+        onSearchFilters(parsedFilters)
+        dispatch(setFilterBy(parsedFilters))
+    }, [location.search, dispatch])
+
+
+    useEffect(() => {
+        console.log('useEffect filterBy:')
         const queryParams = generateFilterQuery(filterBy)
         const queryString = new URLSearchParams(queryParams).toString()
         navigate(`/shop${queryString ? '?' + queryString : ''}`)
+        dispatch(loadPlants())
+
     }, [filterBy])
 
     useEffect(() => {
-        if (!plants || !plants.length) dispatch(loadPlants())
-    }, [plants]);
+        if (!plants || !plants.length) {
+            dispatch(loadPlants())
+        }
+    }, [plants]) // [filterBy]
 
     function onSearchFilters(filters) {
+        console.log('onSearchFilters:')
         setFilters(filters)
     }
 

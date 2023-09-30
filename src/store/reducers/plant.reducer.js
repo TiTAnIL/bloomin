@@ -60,7 +60,6 @@ export function plantReducer(state = INITIAL_STATE, action) {
                 ...state,
                 isLoading: action.isLoading
             }
-            break
         default:
             return state;
     }
