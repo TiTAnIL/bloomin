@@ -21,7 +21,7 @@ export function Shop() {
         Home: false,
         Office: false,
         Balcony: false,
-        Yard: false,
+        Garden: false,
         difficulty: false,
         lightning: false,
         watering: false,
@@ -40,7 +40,7 @@ export function Shop() {
             'Home',
             'Office',
             'Balcony',
-            'Yard',
+            'Garden',
             'difficulty',
             'lightning',
             'watering',
@@ -116,15 +116,6 @@ export function Shop() {
         }
         return queryParams;
     }
-
-    // useEffect(() => {
-    //     const searchParams = new URLSearchParams(location.search);
-    //     const parsedFilters = {}
-    //     for (const [key, value] of searchParams.entries()) {
-    //         parsedFilters[key] = value === 'true' || value === 'false' ? value === 'true' : value;
-    //     }
-    //     setFilters(parsedFilters)
-    // }, [location.search, dispatch])
 
     const idxLastPlant = currentPage * plantsPerPage
     const idxFirstPlant = idxLastPlant - plantsPerPage

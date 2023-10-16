@@ -1,17 +1,30 @@
 import { httpService } from './http.service';
 
 async function query(filterBy) {
-  console.log('calling plant query frontend', typeof(filterBy), filterBy)
+  // const filterBy = {
+  //   'priceRange.min': 140,
+  //   'priceRange.max': 145
+  // };
+  console.log('calling plant query frontend', filterBy)
   try {
     if (filterBy === null) {
-      console.log('query no filterBy')
       return await httpService.get(`plants`)
     } else {
       console.log('query filterBy', filterBy)
-      const queryString = Object.keys(filterBy)
-        .map((key) => `${key}=${encodeURIComponent(filterBy[key])}`)
-        .join('&')
-      return await httpService.get(`plants/categories?${queryString}`)
+      const queryString = Object.keys(filterBy).map(key => {
+        if (key === 'priceRange') {
+          return Object.keys(filterBy[key]).map(subKey => {
+            return `${key}.${subKey}=${filterBy[key][subKey]}`
+          }).join('&')
+        } else {
+          return `${key}=${filterBy[key]}`
+        }
+      }).join('&')
+
+      console.log('query queryString', `plants/categories?${queryString}`)
+      const plants = await httpService.get(`plants/categories?${queryString}`)
+      console.log(plants)
+      return plants;
     }
   } catch (error) {
     console.error('Error querying plants:', error)

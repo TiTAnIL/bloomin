@@ -10,6 +10,13 @@
     position: relative;
     border: 1px solid v.$clr3;
     transition: opacity 0.9s ease-in-out;
+    max-width: 100%;
+
+    & h2 {
+        max-width: 100%;
+        word-wrap: break-word;
+        font-size: mix.rem(18px);
+    }
 
     & img,
     & a {

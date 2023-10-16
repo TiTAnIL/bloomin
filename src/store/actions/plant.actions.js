@@ -43,37 +43,31 @@ export function loadPlants(filterBy = null) {
   return async (dispatch, getState) => {
     try {
       const filterByParam = filterBy || getState().plantModule.filterBy;
+      console.log(filterByParam)
       let filterQuery = { ...filterByParam }; // Create a new variable to store filtered values
-
       Object.keys(filterQuery).forEach((key) => {
         if (key !== 'priceRange') {
           const val = filterQuery[key];
           if (!val) {
             delete filterQuery[key]; // Remove key if the value is falsy
           }
-          console.log(`${key}: ${val}`);
         } else {
           const { min, max } = filterQuery.priceRange;
           if (min === 0 && max === 1000) {
             delete filterQuery.priceRange; // Remove priceRange key if min and max are default
           }
-          console.log(`min: ${min}, max: ${max}`);
         }
-      });
-      console.log('filterQuery', filterQuery)
-      console.log(Object.keys(filterQuery).length)
+      })
       if (Object.keys(filterQuery).length === 0 ) {
-        console.log('filterBy is empty')
         filterQuery = null; // Set filterBy to null if all filters are falsy and priceRange is default
-        console.log('filterBy', filterQuery)
       }
-
-      console.log('loadplants with filterBy', filterQuery);
-      const plants = await plantService.query(filterQuery);
+      // console.log(filterQuery)
+      const plants = await plantService.query(filterQuery)
+      // console.log('plant.actions.js: loadPlants(filterBy) - plants', plants)
       dispatch({ type: 'SET_PLANTS', plants });
-      dispatch({ type: 'SET_LOADING', isLoading: false });
+      dispatch({ type: 'SET_LOADING', isLoading: false })
     } catch (error) {
-      console.error('Error loading plants:', error);
+      console.error('Error loading plants:', error)
     }
   };
 }

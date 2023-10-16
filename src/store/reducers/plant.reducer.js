@@ -6,7 +6,7 @@ const INITIAL_STATE = {
         Home: false,
         Office: false,
         Balcony: false,
-        Yard: false,
+        Garden: false,
         difficulty: false,
         lightning: false,
         watering: false,
@@ -15,6 +15,7 @@ const INITIAL_STATE = {
             max: 1000,
         }
     },
+    isChanged: false,
     isLoading: true
 }
 

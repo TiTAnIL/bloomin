@@ -28,7 +28,7 @@
       "http://dummyimage.com/195x229.png/ff4444/ffffff",
       "http://dummyimage.com/178x185.png/5fa2dd/ffffff"
     ],
-    "location": "Yard",
+    "location": "Garden",
     "difficulty": "Hard",
     "lightning": "High",
     "irrigation": "Low"
@@ -113,7 +113,7 @@
       "http://dummyimage.com/195x229.png/ff4444/ffffff",
       "http://dummyimage.com/178x185.png/5fa2dd/ffffff"
     ],
-    "location": "Yard",
+    "location": "Garden",
     "difficulty": "Hard",
     "lightning": "Partial",
     "irrigation": "Partially"
@@ -198,7 +198,7 @@
       "http://dummyimage.com/195x229.png/ff4444/ffffff",
       "http://dummyimage.com/178x185.png/5fa2dd/ffffff"
     ],
-    "location": "Yard",
+    "location": "Garden",
     "difficulty": "Hard",
     "lightning": "High",
     "irrigation": "Low"
@@ -283,7 +283,7 @@
       "http://dummyimage.com/195x229.png/ff4444/ffffff",
       "http://dummyimage.com/178x185.png/5fa2dd/ffffff"
     ],
-    "location": "Yard",
+    "location": "Garden",
     "difficulty": "Hard",
     "lightning": "Partial",
     "irrigation": "Partially"
@@ -368,7 +368,7 @@
       "http://dummyimage.com/195x229.png/ff4444/ffffff",
       "http://dummyimage.com/178x185.png/5fa2dd/ffffff"
     ],
-    "location": "Yard",
+    "location": "Garden",
     "difficulty": "Hard",
     "lightning": "High",
     "irrigation": "Low"
@@ -453,7 +453,7 @@
       "http://dummyimage.com/195x229.png/ff4444/ffffff",
       "http://dummyimage.com/178x185.png/5fa2dd/ffffff"
     ],
-    "location": "Yard",
+    "location": "Garden",
     "difficulty": "Hard",
     "lightning": "Partial",
     "irrigation": "Partially"

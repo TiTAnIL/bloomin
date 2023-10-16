@@ -13,7 +13,7 @@ export function SearchFilter() {
         Home: false,
         Office: false,
         Balcony: false,
-        Yard: false,
+        Garden: false,
         difficulty: false,
         lightning: false,
         watering: false,
@@ -32,7 +32,7 @@ export function SearchFilter() {
             'Home',
             'Office',
             'Balcony',
-            'Yard',
+            'Garden',
             'difficulty',
             'lightning',
             'watering',
@@ -61,6 +61,7 @@ export function SearchFilter() {
                 parsedFilters[filterName] = false;
             }
         })
+
         setFilters(parsedFilters)
     }, [location.search, dispatch])
 
@@ -93,7 +94,7 @@ export function SearchFilter() {
             Home: false,
             Office: false,
             Balcony: false,
-            Yard: false,
+            Garden: false,
             difficulty: false,
             lightning: false,
             watering: false,
@@ -140,11 +141,11 @@ export function SearchFilter() {
             <label>
                 <input
                     type="checkbox"
-                    name="Yard"
-                    checked={filters.Yard}
+                    name="Garden"
+                    checked={filters.Garden}
                     onChange={handleInputChange}
                 />
-                Yard
+                Garden
             </label>
 
             <h2>Difficulty</h2>
