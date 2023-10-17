@@ -60,7 +60,7 @@ export const PlantDetails = () => {
             <div className="needs">
                 <img alt="puzzle" src={puzzle} />
                 <p className="assistant-reg-20pt">Difficulty level</p>
-                <p>Easy</p>
+                <p>{plant.difficulty}</p>
             </div>
             <div className="needs">
                 <img alt="lightBulb" src={lightBulb} />

@@ -76,7 +76,6 @@ export function Shop() {
 
 
     useEffect(() => {
-        console.log('useEffect filterBy:')
         const queryParams = generateFilterQuery(filterBy)
         const queryString = new URLSearchParams(queryParams).toString()
         navigate(`/shop${queryString ? '?' + queryString : ''}`)
@@ -88,7 +87,7 @@ export function Shop() {
         if (!plants || !plants.length) {
             dispatch(loadPlants())
         }
-    }, [plants]) // [filterBy]
+    }, [plants])
 
     function onSearchFilters(filters) {
         console.log('onSearchFilters:')

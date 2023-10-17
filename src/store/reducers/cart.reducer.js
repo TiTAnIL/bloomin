@@ -12,13 +12,22 @@ export function cartReducer(state = INITIAL_STATE, action) {
                 ...state,
                 items: action.items
             }
-        case 'ADD_TO_CART':
-            return {
-                ...state,
-                items: [...state.items, action.item],
-            }
+            case 'ADD_TO_CART':
+                const existingItem = state.items.find((item) => item._id === action.item._id);
+                if (existingItem) {
+                  return {
+                    ...state,
+                    items: state.items.map((item) =>
+                      item._id === existingItem._id ? { ...item, quantity: existingItem.quantity } : item
+                    ),
+                  };
+                } else {
+                  return {
+                    ...state,
+                    items: [...state.items, action.item],
+                  }
+                }
         case 'REMOVE_FROM_CART':
-            console.log(action.itemId)
             const lastRemovedStay = state.items.find(
                 (item) => item._id === action.itemId
             )

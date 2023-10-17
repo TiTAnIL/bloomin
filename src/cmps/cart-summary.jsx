@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { utilService } from '../services/util.service.js';
 
 export function CartSummery({ items, quantities }) {
-  const [currQuantity, setQuantity] = useState(0)
+  // const [currQuantity, setQuantity] = useState(0)
   const [total, setTotal] = useState(0)
 
   useEffect(() => {

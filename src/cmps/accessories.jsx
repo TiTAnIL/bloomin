@@ -11,7 +11,7 @@ export function Accessories() {
 
     useEffect(() => {
         dispatch(loadAccessories())
-    }, []);
+    }, [])
 
     const onAddToCart = (accessory) => {
         dispatch(addItem({ ...accessory, quantity: 1 }))

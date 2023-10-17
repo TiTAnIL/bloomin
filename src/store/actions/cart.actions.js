@@ -34,17 +34,30 @@ export function loadCart() {
             .catch(err => {
                 console.log('err:', err)
             })
-        }
     }
+}
 
 export function addItem(item) {
-    console.log('addCart(item):', item)
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         try {
-            const savedCart = await cartService.save(item)
-            console.log(savedCart)
-            dispatch(getActionAddItem(savedCart))
-            showSuccessMsg('Added to cart!')
+            const { cartModule: { items } } = getState();
+            const existingItem = items.find((existingItem) => existingItem._id === item._id)
+
+            if (existingItem) {
+                existingItem.quantity += item.quantity;
+                const updatedCart = items.map((cartItem) =>
+                    cartItem._id === existingItem._id ? existingItem : cartItem
+                )
+
+                await cartService.update(updatedCart)
+
+                dispatch(getActionUpdateItem(existingItem))
+                showSuccessMsg('Cart updated!')
+            } else {
+                const savedCart = await cartService.save(item)
+                dispatch(getActionAddItem(savedCart))
+                showSuccessMsg('Added to cart!')
+            }
         } catch (err) {
             showErrorMsg('Cannot add item')
             console.log('Cannot add item', err)
@@ -53,15 +66,27 @@ export function addItem(item) {
 }
 
 export function updateItem(item) {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         try {
-            const savedItem = await cartService.save(item)
-            console.log('updated cart:', savedItem)
-            dispatch(getActionUpdateItem(savedItem))
-            showSuccessMsg('Cart updated')
-        } catch (error) {
-            showUserMsg('cant update cart')
-            console.log('cannot update cart', error)
+            const { cartModule: { items } } = getState()
+            const existingItem = items.find((existingItem) => existingItem._id === item._id)
+
+            if (existingItem) {
+                existingItem.quantity += item.quantity;
+                const updatedCart = items.map((cartItem) =>
+                    cartItem._id === existingItem._id ? existingItem : cartItem
+                )
+
+                await cartService.update(updatedCart)
+
+                dispatch(getActionUpdateItem(existingItem))
+                showSuccessMsg('Cart updated!')
+            } else {
+                showErrorMsg('Item not found in the cart.')
+            }
+        } catch (err) {
+            showErrorMsg('Cannot update item')
+            console.log('Cannot update item', err)
         }
     }
 }
