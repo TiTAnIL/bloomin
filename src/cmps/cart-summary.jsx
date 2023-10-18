@@ -6,14 +6,13 @@ export function CartSummery({ items, quantities }) {
   const [total, setTotal] = useState(0)
 
   useEffect(() => {
-    let newTotal = 0;
+    let newTotal = 0
     items.forEach((item) => {
-      const itemTotal = item.price * quantities[item.name];
-      newTotal += itemTotal;
-    });
-    setTotal(newTotal);
-  }, [items, quantities]);
-
+      const itemTotal = item.price * quantities[item.name]
+      newTotal += itemTotal
+    })
+    setTotal(newTotal.toFixed(2))
+  }, [items, quantities])
 
   return (
     <section>
@@ -46,7 +45,7 @@ export function CartSummery({ items, quantities }) {
                   <tr key={item.name + utilService.makeId()}>
                     <td>{item.name}</td>
                     <td>{quantities[item.name]}</td>
-                    <td>${item.price * quantities[item.name]}</td>
+                    <td>${typeof item.price === 'string' ? (parseFloat(item.price) * quantities[item.name]).toFixed(2) : item.price.toFixed(2) * quantities[item.name]}</td>
                   </tr>
                 )
               })}

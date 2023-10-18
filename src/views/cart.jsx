@@ -33,14 +33,13 @@ export function Cart() {
     }, [dispatch, loadCart])
 
     useEffect(() => {
-        let newTotal = 0
+        let newTotal = 0;
         items.forEach((item) => {
-            newTotal += item.quantity
-        })
-        setTotal(newTotal)
-    }, [items, setTotal])
-
-
+            newTotal += item.quantity;
+        });
+        setTotal(newTotal.toFixed(2))
+    }, [items, setTotal]);
+    
     const handleOpenModal = () => {
         setModalOpen(true)
     }
@@ -57,7 +56,6 @@ export function Cart() {
         setID(id)
         dispatch(removeItem(id))
     }, [dispatch, id])
-
 
     if (!items) return <LoadingScreen
         loading={true}
@@ -111,8 +109,8 @@ export function Cart() {
                                             }} />
                                         </div>
                                     </td>
-                                    <td >${item.price}</td>
-                                    <td >${item.price * quantities[item.name]}</td>
+                                    <td >${item.price}</td> 
+                                    <td >${typeof item.price === 'string' ? (parseFloat(item.price) * quantities[item.name]).toFixed(2) : item.price.toFixed(2) * quantities[item.name]}</td>
                                     <td ><img src={trash} className='remove-item' alt='remove-item' onClick={() => onRemoveItem(item._id)} /></td>
                                 </tr>
                             )
