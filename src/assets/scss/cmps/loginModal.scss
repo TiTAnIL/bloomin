@@ -1,0 +1,68 @@
+.login-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  
+    &.open {
+      display: flex;
+    }
+  
+    .login-modal-inner {
+      background: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      width: 300px;
+      
+  
+      h2 {
+        margin: 0 0 20px;
+        font-size: 24px;
+        text-align: center;
+      }
+  
+      .login-modal-close {
+        position: absolute;
+        cursor: pointer;
+        font-size: 20px;
+      }
+  
+      form {
+        .form-group {
+          margin: 10px 0;
+  
+          label {
+            display: block;
+            margin-bottom: 5px;
+          }
+  
+          input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+          }
+        }
+  
+        button {
+          display: block;
+          width: 100%;
+          padding: 10px;
+          background-color: #4850b9;
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+  

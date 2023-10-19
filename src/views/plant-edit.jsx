@@ -42,7 +42,6 @@ export function Edit() {
         })
     }, [])
 
-    // const { name, diameter, height, price, difficulty, about } = plant;
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
     const [images, setImages] = useState({
         primary: null,
@@ -155,7 +154,7 @@ export function Edit() {
                             onChange={(e) =>
                                 setImages((prevState) => ({
                                     ...prevState,
-                                    secondary: e.target.files[0],
+                                    secondary: e.target.files[1],
                                 }))
                             }
                         />
@@ -180,7 +179,7 @@ export function Edit() {
                             onChange={(e) =>
                                 setImages((prevState) => ({
                                     ...prevState,
-                                    tertiary: e.target.files[0],
+                                    tertiary: e.target.files[2],
                                 }))
                             }
                         />

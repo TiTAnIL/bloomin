@@ -82,10 +82,11 @@ export function AppHeader() {
                             <div className="logo-container">
                                 <NavLink className="header-logo" to='/'><img src={logo} alt="logo" /></NavLink>
                             </div>
-                            <li><NavLink className="navigators assistant-reg-20pt" to='/shop'>shop</NavLink></li>
-                            <li><NavLink className="navigators assistant-reg-20pt" to='/match'>mix&match</NavLink></li>
-                            <li><NavLink className="navigators assistant-reg-20pt" to='/contact'>contact</NavLink></li>
-                            <li><NavLink className="navigators assistant-reg-20pt" to='/about'>info</NavLink></li>
+                            <li><NavLink className="navigators assistant-reg-20pt" to='/shop'>Shop</NavLink></li>
+                            <li><NavLink className="navigators assistant-reg-20pt" to='/match'>Mix&Match</NavLink></li>
+                            <li><NavLink className="navigators assistant-reg-20pt" to='/contact'>Contact</NavLink></li>
+                            <li><NavLink className="navigators assistant-reg-20pt" to='/about'>Info</NavLink></li>
+
                         </ul>
                     </div>
 
