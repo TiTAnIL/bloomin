@@ -9,6 +9,23 @@ export function GreetingModal({ open, onClose, onSave }) {
     onClose()
   }
 
+  // Close the modal when clicking outside of it
+  const handleOutsideClick = (e) => {
+    if (e.target.classList.contains('modal')) {
+      onClose();
+    }
+  };
+
+  // Attach click listener to the document when modal is open
+  React.useEffect(() => {
+    document.addEventListener('click', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  });
+  
+
   return (
     <div className={`modal ${open ? 'open' : ''}`}>
       <div className="modal-content">

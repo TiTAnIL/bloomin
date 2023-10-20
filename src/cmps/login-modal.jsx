@@ -15,7 +15,13 @@ function LoginModal({ isOpen, onClose }) {
   };
 
   // Attach click listener to the document when modal is open
-
+    useEffect(() => {
+        document.addEventListener('mousedown', handleOutsideClick);
+    
+        return () => {
+        document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    });
 
   const handleLogin = async (e) => {
     e.preventDefault();

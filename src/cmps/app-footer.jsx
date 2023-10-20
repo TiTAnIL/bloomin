@@ -19,7 +19,6 @@ export function AppFooter() {
         setLoginOpen(false)
     }
 
-
     return (
         <footer className="app-footer">
             <div className="footer-logo">
