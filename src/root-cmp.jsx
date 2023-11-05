@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react'
 import { Route, Routes } from 'react-router-dom';
 import routes from './routes'
 
 import { AppFooter } from './cmps/app-footer';
 import { AppHeader } from './cmps/app-header';
+
 
 function App() {
   return (

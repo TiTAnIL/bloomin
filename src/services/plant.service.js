@@ -1,16 +1,10 @@
 import { httpService } from './http.service';
 
 async function query(filterBy) {
-  // const filterBy = {
-  //   'priceRange.min': 140,
-  //   'priceRange.max': 145
-  // };
-  console.log('calling plant query frontend', filterBy)
   try {
     if (filterBy === null) {
       return await httpService.get(`plants`)
     } else {
-      console.log('query filterBy', filterBy)
       const queryString = Object.keys(filterBy).map(key => {
         if (key === 'priceRange') {
           return Object.keys(filterBy[key]).map(subKey => {
@@ -20,10 +14,7 @@ async function query(filterBy) {
           return `${key}=${filterBy[key]}`
         }
       }).join('&')
-
-      console.log('query queryString', `plants/categories?${queryString}`)
       const plants = await httpService.get(`plants/categories?${queryString}`)
-      console.log(plants)
       return plants;
     }
   } catch (error) {
@@ -33,7 +24,6 @@ async function query(filterBy) {
 }
 
 async function save(plant) {
-  console.log('calling plant save frontend', plant)
   try {
     let savedPlant
     if (plant._id) {

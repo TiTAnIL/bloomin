@@ -1,66 +1,63 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import fireAuth from '../firebase';
 
-function LoginModal({ isOpen, onClose }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+function LoginModal({ isOpen, onClose}) {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const modalRef = useRef(null)
+    // const [user, setUser] = useState(null);
 
-  // Ref to the modal element
-  const modalRef = useRef(null);
-
-  // Close the modal when clicking outside of it
-  const handleOutsideClick = (e) => {
-    if (modalRef.current && !modalRef.current.contains(e.target)) {
-      onClose();
-    }
-  };
-
-  // Attach click listener to the document when modal is open
+    // useEffect when email or password changes and console.log them
     useEffect(() => {
-        document.addEventListener('mousedown', handleOutsideClick);
-    
-        return () => {
-        document.removeEventListener('mousedown', handleOutsideClick);
-        };
-    });
+        console.log(email, password)
+    }, [email, password])
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
 
-    // Send a request to your backend to initiate the Auth0 login process
-    // You'll need to implement this part based on your server's Auth0 configuration
-  }
+    const handleLogin = async (event) => {
+        event.preventDefault();
+        try {
+          console.log(email, password)
+          const auth = getAuth(fireAuth);
+          const userCredential = await signInWithEmailAndPassword(auth, email, password)
+        //   setUser(userCredential.user)
+        //   console.log('Logged in:', user)
+        } catch (error) {
+          console.error('Login failed:', error)
+        }
+      };
 
-  return (
-    <div className={`login-modal ${isOpen ? 'open' : ''}`}>
-      <div className="login-modal-inner" ref={modalRef}>
-        <span className="login-modal-close" onClick={onClose}>
-          X
-        </span>
-        <h2>Login</h2>
-        <form onSubmit={handleLogin}>
-          <div className="form-group">
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <button type="submit">Log In</button>
-        </form>
-      </div>
-    </div>
-  );
+    return (
+        <div className={`login-modal ${isOpen ? 'open' : ''}`}>
+            <div className="login-modal-inner" ref={modalRef}>
+                <span className="login-modal-close" onClick={onClose}>
+                    X
+                </span>
+                <h2>Login</h2>
+                <form onSubmit={handleLogin}>
+                    <div className="form-group">
+                        <label htmlFor="email">Email:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password">Password:</label>
+                        <input
+                            type="password"
+                            id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    <button type="submit">Log In</button>
+                </form>
+            </div>
+        </div>
+    );
 }
-
+// }
 export default LoginModal;

@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.5",
     "bootstrap": "^5.2.3",
+    "firebase": "^10.5.2",
     "lodash": "^4.17.21",
     "lodash.debounce": "^4.0.8",
     "query-string": "^8.1.0",

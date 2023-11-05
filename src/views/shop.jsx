@@ -32,7 +32,6 @@ export function Shop() {
     })
 
     useEffect(() => {
-        console.log('useEffect location.search:')
         const queryParams = new URLSearchParams(location.search)
         const parsedFilters = {}
         const filterNames = [
@@ -90,7 +89,6 @@ export function Shop() {
     }, [plants])
 
     function onSearchFilters(filters) {
-        console.log('onSearchFilters:')
         setFilters(filters)
     }
 

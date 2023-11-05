@@ -2,7 +2,7 @@
 import { applyMiddleware, combineReducers, compose, legacy_createStore as createStore } from 'redux'
 import thunk from 'redux-thunk'
 import { plantReducer } from './reducers/plant.reducer'
-import { userReducer } from './reducers/user.reducer'
+import { authReducer } from './reducers/auth.reducer'
 import { vaseReducer } from './reducers/vase.reducer'
 import { accessoryReducer } from './reducers/accessory.reducer'
 import { cartReducer } from './reducers/cart.reducer'
@@ -13,6 +13,7 @@ const rootReducer = combineReducers({
     cartModule: cartReducer,
     plantModule: plantReducer,
     vaseModule: vaseReducer,
+    authModule: authReducer,
     accessoryModule: accessoryReducer,
 })
 

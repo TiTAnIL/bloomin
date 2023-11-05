@@ -39,11 +39,9 @@ export function setChanged(isChanged) {
 }
 
 export function loadPlants(filterBy = null) {
-  console.log('plant.actions.js: loadPlants(filterBy)', filterBy);
   return async (dispatch, getState) => {
     try {
       const filterByParam = filterBy || getState().plantModule.filterBy;
-      console.log(filterByParam)
       let filterQuery = { ...filterByParam }; // Create a new variable to store filtered values
       Object.keys(filterQuery).forEach((key) => {
         if (key !== 'priceRange') {
@@ -58,12 +56,10 @@ export function loadPlants(filterBy = null) {
           }
         }
       })
-      if (Object.keys(filterQuery).length === 0 ) {
+      if (Object.keys(filterQuery).length === 0) {
         filterQuery = null; // Set filterBy to null if all filters are falsy and priceRange is default
       }
-      // console.log(filterQuery)
       const plants = await plantService.query(filterQuery)
-      // console.log('plant.actions.js: loadPlants(filterBy) - plants', plants)
       dispatch({ type: 'SET_PLANTS', plants });
       dispatch({ type: 'SET_LOADING', isLoading: false })
     } catch (error) {
@@ -99,7 +95,6 @@ export function addPlant(plant) {
   return async (dispatch) => {
     try {
       const savedPlant = await plantService.save(plant)
-      console.log(savedPlant)
       dispatch(getActionAddPlant(savedPlant))
       showSuccessMsg('plant added')
     } catch (err) {

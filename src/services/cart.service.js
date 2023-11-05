@@ -2,7 +2,7 @@ import { storageService } from "./async-storage.service.js"
 import { utilService } from './util.service.js'
 import { store } from '../store/index'
 
-// import { userService } from './user.service.js'
+// import { authService } from './auth.service.js'
 import {
     getActionRemoveItem,
     getActionAddItem,
@@ -49,7 +49,7 @@ async function save(item) {
     // cartChannel.postMessage(getActionUpdateItem(savedCart))
     // } else {
     // TODO: owner is set by the beckend
-    // plant.owner = userService.getLoggedinUser()
+    // plant.owner = authService.getLoggedinUser()
     savedCart = await storageService.post(STORAGE_KEY, item)
     cartChannel.postMessage(getActionAddItem(savedCart))
     // }
