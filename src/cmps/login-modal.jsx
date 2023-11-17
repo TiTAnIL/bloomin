@@ -8,7 +8,6 @@ function LoginModal({ isOpen, onClose}) {
     const modalRef = useRef(null)
     // const [user, setUser] = useState(null);
 
-    // useEffect when email or password changes and console.log them
     useEffect(() => {
         console.log(email, password)
     }, [email, password])

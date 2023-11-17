@@ -5,64 +5,50 @@ import instagram from "../assets/imgs/instagram.png";
 import tweeter from "../assets/imgs/tweeter.png";
 import LoginModal from "./login-modal";
 import Logout from "./logout";
-// import LoadingScreen from "react-loading-screen"
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import fireAuth from '../firebase';
+import { useDispatch } from "react-redux";
 
 export function AppFooter() {
 
   const [isLoginOpen, setLoginOpen] = useState(false)
   const [isAuthenticated, setisAuthenticated] = useState(false)
+  const dispatch = useDispatch()
 
   const handleLogout = async (event) => {
     event.preventDefault();
     try {
       const auth = getAuth(fireAuth);
       await signOut(auth);
-      setisAuthenticated(false)
-      console.log(isAuthenticated, 'Logged out')
+      setisAuthenticated(false);
+      setLoginOpen(false);
+      dispatch({ type: 'LOGOUT' })
     } catch (error) {
       console.error('Logout failed:', error);
     }
   };
 
   const closeLogin = () => {
-    setLoginOpen(false);
+    setLoginOpen(false)
+  }
+
+  const openLogin = () => {
+    setLoginOpen(true)
   }
 
   useEffect(() => {
+    dispatch({ type: 'LOGIN_REQUEST' })
     const auth = getAuth(fireAuth);
     onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setisAuthenticated(true)
-        console.log('User is logged in:', isAuthenticated, currentUser)
+        dispatch({ type: 'LOGIN_SUCCESS', payload: currentUser })
       } else {
-        setisAuthenticated(null);
-        console.log('User is not logged in:', isAuthenticated)
+        setisAuthenticated(false)
+        dispatch({ type: 'LOGIN_FAIL' })
       }
-    });
-  }, [isAuthenticated]);
-
-  const openLogin = () => {
-    setLoginOpen(true);
-  }
-
-  // if (isLoading) {
-  //   return <LoadingScreen
-  //     loading={true}
-  //     bgColor="rgba(255,255,255,0.5)"
-  //     spinnerColor="#4850b9"
-  //     textColor="#676767"
-  //     logoSrc="../logo.png"
-  //     text="Loading"
-  //   >
-  //     {" "}
-  //   </LoadingScreen>
-  // }
-
-  // if (error) {
-  //   return <div>Oops... {error.message}</div>;
-  // }
+    })
+  }, [dispatch])
 
   return (
     <footer className="app-footer">
@@ -89,10 +75,7 @@ export function AppFooter() {
         {!isAuthenticated ? (
           <li>
             {isLoginOpen && (
-              <LoginModal
-                isOpen={isLoginOpen}
-                onClose={closeLogin}
-              />
+              <LoginModal isOpen={isLoginOpen} onClose={closeLogin} />
             )}
             <button onClick={openLogin}>Login</button>
           </li>
