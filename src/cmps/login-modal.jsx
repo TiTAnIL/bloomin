@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import fireAuth from '../firebase';
+// import fireAuth from '../firebase';
 
 function LoginModal({ isOpen, onClose}) {
     const [email, setEmail] = useState('')
@@ -17,8 +17,8 @@ function LoginModal({ isOpen, onClose}) {
         event.preventDefault();
         try {
           console.log(email, password)
-          const auth = getAuth(fireAuth);
-          const userCredential = await signInWithEmailAndPassword(auth, email, password)
+        //   const auth = getAuth(fireAuth);
+        //   const userCredential = await signInWithEmailAndPassword(auth, email, password)
         //   setUser(userCredential.user)
         //   console.log('Logged in:', user)
         } catch (error) {
