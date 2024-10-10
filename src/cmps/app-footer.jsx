@@ -5,8 +5,8 @@ import instagram from "../assets/imgs/instagram.png";
 import tweeter from "../assets/imgs/tweeter.png";
 import LoginModal from "./login-modal";
 import Logout from "./logout";
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import fireAuth from '../firebase';
+// import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+// import fireAuth from '../firebase';
 import { useDispatch } from "react-redux";
 
 export function AppFooter() {
@@ -18,11 +18,12 @@ export function AppFooter() {
   const handleLogout = async (event) => {
     event.preventDefault();
     try {
-      const auth = getAuth(fireAuth);
-      await signOut(auth);
+      console.log(event)
+      // const auth = getAuth(fireAuth);
+      // await signOut(auth);
       setisAuthenticated(false);
-      setLoginOpen(false);
-      dispatch({ type: 'LOGOUT' })
+      // setLoginOpen(false);
+      // dispatch({ type: 'LOGOUT' })
     } catch (error) {
       console.error('Logout failed:', error);
     }
@@ -34,22 +35,23 @@ export function AppFooter() {
 
   const openLogin = () => {
     setLoginOpen(true)
+  // }
+
+  // useEffect(() => {
+  //   dispatch({ type: 'LOGIN_REQUEST' })
+  //   const auth = 'SomeAuthHash' // getAuth(fireAuth);
+    // onAuthStateChanged(auth, (currentUser) => {
+      // if (currentUser) {
+        // setisAuthenticated(true)
+        // dispatch({ type: 'LOGIN_SUCCESS', payload: currentUser })
+      // } else {
+        // setisAuthenticated(false)
+        // dispatch({ type: 'LOGIN_FAIL' })
+      // }
+  //   })
+//   // }, [dispatch])
   }
-
-  useEffect(() => {
-    dispatch({ type: 'LOGIN_REQUEST' })
-    const auth = getAuth(fireAuth);
-    onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setisAuthenticated(true)
-        dispatch({ type: 'LOGIN_SUCCESS', payload: currentUser })
-      } else {
-        setisAuthenticated(false)
-        dispatch({ type: 'LOGIN_FAIL' })
-      }
-    })
-  }, [dispatch])
-
+  
   return (
     <footer className="app-footer">
       <div className="footer-logo">
